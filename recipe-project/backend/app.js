@@ -11,6 +11,13 @@ const port = 5000;
 // use middleware to parse json request bodies
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+    res.send("What's for Dinner?");
+});
+
+app.get('/health', (req, res) => {
+    res.json({ status: 'OK', timestamp: new Date() });
+});
 
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);
