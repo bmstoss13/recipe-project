@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import MyRecipesCard from "../components/MyRecipesCard";
+import "../styles/MyRecipesPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function MyRecipesPage() {
   const [tab, setTab] = useState("created");
@@ -8,7 +11,7 @@ export default function MyRecipesPage() {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
-
+  const navigate = useNavigate()
   const auth = getAuth();
 
   // Listen for auth state changes
@@ -32,8 +35,7 @@ export default function MyRecipesPage() {
 
   // Fetch recipes when tab or user changes
   useEffect(() => {
-    if (!authChecked) return; // Wait for auth to be checked
-    if (!user) return; // Don't fetch if not logged in
+    if (!authChecked || !user) return; // Wait for auth to be checked
     setLoading(true);
     getAuthHeaders()
       .then(headers =>
@@ -74,51 +76,47 @@ export default function MyRecipesPage() {
   if (!authChecked) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>My Recipes</h1>
-      <div>
-        <button onClick={() => setTab("created")} disabled={tab === "created"}>
-          Created
+    <div className="page">
+      <h1 className="my-recipes-header">My Recipes</h1>
+      <div className="tabRow">
+        <div className="tabOuter">
+            <button
+                className={`tabBtn${tab === "created" ? " active" : ""}`}
+                onClick={() => setTab("created")}
+                // disabled={tab === "created"}
+            >
+                Created
+            </button>
+            <button
+                className={`tabBtn${tab === "saved" ? " active" : ""}`}
+                onClick={() => setTab("saved")}
+                // disabled={tab === "saved"}
+            >
+                Saved
+            </button>
+        </div>
+        <button
+            onClick={() => (window.location.href = "/create-recipe")}
+            className="createBtn"
+        >
+            + Create Recipe
         </button>
-        <button onClick={() => setTab("saved")} disabled={tab === "saved"}>
-          Saved
-        </button>
-      </div>
-      <button onClick={() => (window.location.href = "/create-recipe")}>+ Create Recipe</button>
+        </div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+        <div className="grid">
           {recipes.map((recipe) => (
-            <div
+            <MyRecipesCard
               key={recipe.id}
-              style={{
-                border: "1px solid #ccc",
-                borderRadius: "8px",
-                padding: "1rem",
-                width: "250px",
-              }}
-            >
-              <h3>{recipe.title}</h3>
-              <p>{recipe.description}</p>
-              <ul>
-                {recipe.ingredients?.map((ing, i) => (
-                  <li key={i}>{ing}</li>
-                ))}
-              </ul>
-              <button onClick={() => window.location.href = `/recipe/${recipe.id}`}>
-                View
-              </button>
-              {tab === "created" ? (
-                <>
-                  <button onClick={() => handleEdit(recipe.id)}>Edit</button>
-                  <button onClick={() => handleDelete(recipe.id)}>Delete</button>
-                  <button onClick={() => handleSave(recipe.id)}>Save</button>
-                </>
-              ) : (
-                <button onClick={() => handleUnsave(recipe.id)}>Unsave</button>
-              )}
-            </div>
+              recipe={recipe}
+              tab={tab}
+              onView={() => navigate(`/recipe/${recipe.id}`)}
+              onEdit={() => handleEdit(recipe.id)}
+              onDelete={() => handleDelete(recipe.id)}
+              onSave={() => handleSave(recipe.id)}
+              onUnsave={() => handleUnsave(recipe.id)}
+            />
           ))}
         </div>
       )}
