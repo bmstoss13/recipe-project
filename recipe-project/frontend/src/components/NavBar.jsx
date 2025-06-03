@@ -36,7 +36,7 @@ const Navbar = ({ isAdmin = false }) => {
         <nav className="nav-links">
           <a href="#"><FaSearch /> {open && 'Browse Recipes'}</a>
           <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
-          <a href="#"><FaPlus /> {open && 'Add Recipe'}</a>
+          <a href="create-recipe"><FaPlus /> {open && 'Add Recipe'}</a>
           {isAdmin && (
             <a href="#"><MdDashboard /> {open && 'Admin Dashboard'}</a>
           )}
