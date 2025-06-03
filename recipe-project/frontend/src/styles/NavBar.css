@@ -6,7 +6,6 @@
     width: 23%;
     transition: width 0.3s;
     padding: 1rem;
-    position: fixed;
     display: flex;
     flex-direction: column;
     justify-content: space-between; 

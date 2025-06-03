@@ -100,7 +100,8 @@ function CreateRecipe() {
   }
 
   return (
-    <div>
+    <div className="createRecipeFlex">
+      <Navbar/>
       <div className="createRecipeMain">
         <div className="createRecipeContainer">
           <div className="createRecipeHeaderContainer">

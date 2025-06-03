@@ -121,8 +121,8 @@ function CreateRecipe() {
   }
 
   return (
-    <div>
-      <Navbar isAdmin={false} />
+    <div className="createRecipeFlex">
+      <Navbar/>
       <div className="createRecipeMain">
         <div className="createRecipeContainer">
           <div className="createRecipeHeaderContainer">

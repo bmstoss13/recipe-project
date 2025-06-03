@@ -1,14 +1,18 @@
 .createRecipeMain {
-    margin-left: calc(60px + 2rem);
+    /* margin-left: calc(60px + 2rem); */
     background-color: #F7F7FF;
     min-height:100vh;
     padding: 2rem 0rem;
     height:auto;
-    width: auto;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     overflow-y: auto;
+}
+
+.createRecipeFlex {
+    display: flex;
 }
 
 .createRecipeContainer {

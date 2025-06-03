@@ -1,65 +1,115 @@
-
 import React, { useState, useEffect } from 'react';
-
 import '../styles/Navbar.css';
-import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaSignInAlt, FaBars } from 'react-icons/fa';
+import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaBars } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
-
-
-
-const Navbar = ({ isAdmin = false, onToggle, isOpen }) => {
+import { useCurrentUser } from './CurrentUser';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
+import { toast } from 'react-toastify';
+const Navbar = () => {
+  const { user, profile } = useCurrentUser();
   const [open, setOpen] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
-
+  const [editing, setEditing] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newPfpUrl, setNewPfpUrl] = useState('');
   useEffect(() => {
     const guest = localStorage.getItem('isGuest') === 'true';
     setIsGuest(guest);
   }, []);
-
   const handleAuthClick = () => {
     localStorage.removeItem('isGuest');
     window.location.href = isGuest ? '/auth' : '/';
   };
-
-
+  const handleProfilePicSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, { profileImage: newPfpUrl });
+      toast.success('Profile picture updated!');
+      setModalOpen(false);
+      setNewPfpUrl('');
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to update profile picture');
+    }
+  };
   return (
-    <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
-      <div className="top-section">
-
-        <div className={`toggle-container ${isOpen ? 'open' : 'closed'}`}>
-          <button className="toggle-btn" onClick={onToggle}>
-
-            <FaBars />
-          </button>
+    <>
+      <div className={`sidebar ${open ? 'open' : 'closed'}`}>
+        <div className="top-section">
+          <div className={`toggle-container ${open ? 'open' : 'closed'}`}>
+            <button className="toggle-btn" onClick={() => setOpen(!open)}>
+              <FaBars />
+            </button>
+          </div>
+          <div className="profile">
+            <div
+              className="profile-pic-wrapper"
+              onMouseEnter={() => setEditing(true)}
+              onMouseLeave={() => setEditing(false)}
+            >
+              {profile?.profileImage && !isGuest ? (
+                <img
+                  src={profile.profileImage}
+                  alt="Profile"
+                  className={`profile-icon-img ${open ? 'expanded' : 'collapsed'}`}
+                />
+              ) : (
+                <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'}`} />
+              )}
+              <div className="change-pfp-overlay" onClick={() => setModalOpen(true)}>
+                Change
+              </div>
+            </div>
+            {open && (
+              <div className="user-info">
+                <p className="username">
+                  {isGuest ? 'Guest' : profile?.username || user?.email || 'User'}
+                </p>
+              </div>
+            )}
+          </div>
+          <hr />
+          <nav className="nav-links">
+            <a href="#"><FaSearch /> {open && 'Browse Recipes'}</a>
+            <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
+            <a href="#"><FaPlus /> {open && 'Add Recipe'}</a>
+            {profile?.isAdmin && (
+              <a href="#"><MdDashboard /> {open && 'Admin Dashboard'}</a>
+            )}
+            <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
+          </nav>
         </div>
-
-        <div className="profile">
-          <FaUserCircle className={`profile-icon ${isOpen ? 'expanded' : 'collapsed'}`} />
-          {isOpen && <p className="username">{isGuest ? 'Guest' : 'Username'}</p>}
+        <div className="logout-btn">
+          <a href="#" onClick={handleAuthClick}>
+            {open && (isGuest ? 'Sign In' : 'Logout')}
+          </a>
         </div>
-
-        <hr />
-
-        <nav className="nav-links">
-          <a href="#"><FaSearch /> {open && 'Browse Recipes'}</a>
-          <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
-          <a href="create-recipe"><FaPlus /> {open && 'Add Recipe'}</a>
-          {isAdmin && (
-            <a href="#"><MdDashboard /> {isOpen && 'Admin Dashboard'}</a>
-          )}
-          <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
-        </nav>
       </div>
-
-      <div className="logout-btn">
-
-        <a href="#" onClick={handleAuthClick}>
-          {open && (isGuest ? 'Sign In' : 'Logout')}
-        </a>
-
-      </div>
-    </div>
+      {/* :white_check_mark: Modal */}
+      {modalOpen && (
+        <div className="modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Paste Profile Image URL</h3>
+            <form onSubmit={handleProfilePicSubmit}>
+              <input
+                type="text"
+                placeholder="https://example.com/image.jpg"
+                value={newPfpUrl}
+                onChange={(e) => setNewPfpUrl(e.target.value)}
+                required
+              />
+              <div className="modal-actions">
+                <button type="submit">Save</button>
+                <button type="button" onClick={() => setModalOpen(false)}>Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
-
 export default Navbar;
