@@ -1,0 +1,217 @@
+.recipe-detail-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: var(--background-color);
+    padding: 2rem 0;
+  }
+  
+  .recipe-detail {
+    width: 80%;
+    background-color: var(--background-color);
+  }
+
+  .recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .recipe-text h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .recipe-text p {
+    margin-bottom: 1.5rem;
+    color: #333;
+  }
+  
+  .recipe-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .recipe-buttons .outline {
+    background: white;
+    border: 1px solid var(--salmon-accent-color);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    color: var(--salmon-accent-color);
+  }
+
+  .recipe-buttons .outline:hover {
+    background: var(--salmon-accent-color);
+    color: white;
+  }
+  
+  .recipe-buttons .solid {
+    background: var(--salmon-accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    cursor: pointer;
+  }
+
+  .recipe-buttons .solid:hover {
+    background: none;
+    color: var(--salmon-accent-color);
+    border: 1px solid var(--salmon-accent-color);
+  }
+  
+  .recipe-image img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+    background-color: #ef6b6b;
+  }
+  
+  .instructions h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+  }
+  
+  .instructions p {
+    color: #666;
+    margin-bottom: 1.5rem;
+  }
+  
+  .instructions ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .step-box {
+    display: flex;
+    align-items: flex-start;
+    background-color: rgb(255, 245, 245);
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  }
+  
+  .step-text strong {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+  
+  .feedback {
+    margin-top: 3rem;
+  }
+  
+  .feedback h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .feedback label {
+    display: block;
+    margin: 1rem 0 0.25rem;
+    font-weight: 500;
+  }
+  
+  .feedback input {
+    width: 100%;
+    padding: 0.6rem;
+    background-color: rgb(255, 245, 245);
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  .rating {
+    display: flex;
+    gap: 0.5rem;
+    font-size: 1.8rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+  }
+  
+  .star {
+    color: #ccc;
+    transition: color 0.2s;
+  }
+  
+  .star.filled {
+    color: #f38181;
+  }
+  
+  .post-btn {
+    margin-top: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background-color: #f38181;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  
+  .post-btn:hover {
+    background: none;
+    color: var(--salmon-accent-color);
+    border: 1px solid var(--salmon-accent-color);
+  }
+  
+  .comments-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+  }
+  
+  .comments-section h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+  
+  .comment {
+    background-color: rgb(255, 245, 245);
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    margin-bottom: 1rem;
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #333;
+  }
+  
+  .comment-rating {
+    color: #f38181;
+    font-size: 1rem;
+  }
+  
+  .chat-button {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background-color: #f38181;
+    color: white;
+    padding: 0.75rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+    transition: background-color 0.2s ease;
+  }
+  
+  .chat-button:hover {
+    background-color: #ef6b6b;
+  }
+  
+  .recipe-image-bordered {
+    border: 20px solid var(--salmon-accent-color);
+    width: 100%;
+    max-width: 300px;
+    object-fit: cover;
+  }
