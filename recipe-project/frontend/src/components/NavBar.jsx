@@ -33,7 +33,7 @@ const Navbar = () => {
       toast.success('Profile picture updated!');
       setModalOpen(false);
       setNewPfpUrl('');
-      window.location.reload(); 
+      window.location.reload();
     } catch (err) {
       console.error(err);
       toast.error('Failed to update profile picture');
@@ -65,7 +65,6 @@ const Navbar = () => {
               ) : (
                 <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'}`} />
               )}
-
               <div className="change-pfp-overlay" onClick={() => setModalOpen(true)}>
                 Change
               </div>
@@ -100,7 +99,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ✅ Modal */}
       {modalOpen && (
         <div className="modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>

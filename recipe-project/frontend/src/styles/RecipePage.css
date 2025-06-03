@@ -1,0 +1,141 @@
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #b3b3b3;
+  border-radius: 3px;
+}
+
+
+.recipe-page{
+    background-color: #F7F7FF;
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    /* padding: 20px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.recipe-header {
+    background-color: transparent;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    border-bottom: 1px solid #ccc;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding-bottom: 20px;
+    /* margin-left: 300px;  */
+}
+
+
+
+.recipe-header h1{
+    font-size: 4rem;
+    width: 100%; 
+    display: flex; 
+    justify-content: flex-start;
+}
+
+.toggle-and-search-container {
+    width: 100%; 
+    display: flex;
+    flex-direction: row; 
+    align-items: center; 
+    gap: 20px; 
+    justify-content: flex-start; 
+    flex-wrap: wrap; 
+}
+
+.MuiToggleButtonGroup-root {
+    background-color: #F7F7FF; 
+    border: 1px solid #F87575; 
+    border-radius: 10px !important; 
+    overflow: hidden; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.MuiToggleButton-root {
+    flex: 1;
+    border: 2px solid transparent !important;
+    border-radius: 0px !important; 
+    color: #1C0F13;
+    text-transform: none !important;
+    font-weight: 500;
+    padding: 8px 16px;
+    min-width: 140px;
+    transition: all 0.3s ease;
+    background-clip: padding-box;
+}
+
+.MuiToggleButtonGroup-grouped:not(:last-of-type) {
+    border-right: none !important;
+}
+.MuiToggleButtonGroup-grouped:first-of-type {
+    border-radius: 8px !important; 
+}
+.MuiToggleButtonGroup-grouped:last-of-type {
+    border-radius: 8px !important; 
+}
+
+
+.MuiToggleButton-root.Mui-selected {
+    background-color: #F87575 !important;
+    color: #F7F7FF !important;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
+    border-color: #F7F7FF !important;
+}
+
+.MuiToggleButton-root:not(.Mui-selected):hover {
+    background-color: #f4dddd;
+}
+
+
+.MuiToggleButton-root.Mui-selected:hover {
+    background-color: #E06565 !important; 
+    cursor:default;
+}
+
+
+.recipe-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    justify-content: center;
+    padding: 20px;
+}
+
+.recipe-grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1500px;
+    padding: 20px 0;
+    justify-items: center;
+}
+
+.recipe-grid-flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 20px 0;
+}
+
+.header-search-container {
+    border: none;
+    background-color: transparent;
+    max-width: 400px;
+    width: 100%;
+}
+

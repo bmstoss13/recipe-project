@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar';
 
 const GuestPage = () => {
   return (
-    <div style={{ marginLeft: '250px' }}>
+    <div>
       <Navbar isAdmin={true} />
       <div style={{ padding: '2rem', color: 'white' }}>
         <h1>Welcome, Guest!</h1>

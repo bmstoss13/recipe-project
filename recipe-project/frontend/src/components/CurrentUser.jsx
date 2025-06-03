@@ -19,7 +19,6 @@ export function useCurrentUser() {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
-
         const profileRef = doc(db, 'users', firebaseUser.uid);
         const profileSnap = await getDoc(profileRef);
         if (profileSnap.exists()) {
