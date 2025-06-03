@@ -4,11 +4,12 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import recipeRoute from "./routes/recipeRoute.js";
 import authRoute from './routes/authRoute.js';
+import myRecipesRoute from './routes/myRecipesRoute.js';
 
 dotenv.config(); // Load the .env file
 
 const app = express();
-const port = 5000;
+const port = 5050;
 
 // use middleware to parse json request bodies
 app.use(bodyParser.json());
@@ -25,6 +26,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/auth', authRoute);
 app.use('/api/recipes', recipeRoute);
+app.use('/api/my-recipes', myRecipesRoute);
 
 app.listen(port, () => {
    console.log(`Server is running on http://localhost:${port}`);

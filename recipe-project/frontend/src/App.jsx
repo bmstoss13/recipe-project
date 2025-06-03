@@ -4,6 +4,7 @@ import HomePage from './routes/HomePage';
 import GuestPage from './routes/GuestPage';
 import RecipePage from './routes/RecipePage';
 import LoginSignup from './routes/LoginSignup';
+import MyRecipesPage from './routes/MyRecipesPage';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/guest" element={<GuestPage />} /> {/** Placeholder*/}
         <Route path="/recipes" element={<RecipePage />} />
         <Route path="/auth" element={<LoginSignup />} />
-        {/* <Route path="/recipes/:id" element={<RecipeDetail />} /> *Placeholder */}
+        <Route path="/my-recipes" element={<MyRecipesPage />} />
+        // {/* <Route path="/recipes/:id" element={<RecipeDetail />} /> *Placeholder */}
       </Routes>
     </Router>
   );
