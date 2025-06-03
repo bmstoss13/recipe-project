@@ -1,0 +1,28 @@
+.app-container {
+  display: flex; 
+  height: 100vh; 
+  width: 100vw; 
+  overflow: hidden; 
+}
+
+.content-area {
+  flex-grow: 1; 
+  height: 100%; 
+  overflow: hidden; 
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.content-area.navbar-open {
+  margin-left: 472px; 
+}
+
+.content-area.navbar-closed {
+  margin-left: 80px; 
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
