@@ -1,9 +1,13 @@
+
 import React, { useState, useEffect } from 'react';
+
 import '../styles/Navbar.css';
 import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaSignInAlt, FaBars } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 
-const Navbar = ({ isAdmin = false }) => {
+
+
+const Navbar = ({ isAdmin = false, onToggle, isOpen }) => {
   const [open, setOpen] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
 
@@ -17,18 +21,21 @@ const Navbar = ({ isAdmin = false }) => {
     window.location.href = isGuest ? '/auth' : '/';
   };
 
+
   return (
-    <div className={`sidebar ${open ? 'open' : 'closed'}`}>
+    <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <div className="top-section">
-        <div className={`toggle-container ${open ? 'open' : 'closed'}`}>
-          <button className="toggle-btn" onClick={() => setOpen(!open)}>
+
+        <div className={`toggle-container ${isOpen ? 'open' : 'closed'}`}>
+          <button className="toggle-btn" onClick={onToggle}>
+
             <FaBars />
           </button>
         </div>
 
         <div className="profile">
-          <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'}`} />
-          {open && <p className="username">{isGuest ? 'Guest' : 'Username'}</p>}
+          <FaUserCircle className={`profile-icon ${isOpen ? 'expanded' : 'collapsed'}`} />
+          {isOpen && <p className="username">{isGuest ? 'Guest' : 'Username'}</p>}
         </div>
 
         <hr />
@@ -38,16 +45,18 @@ const Navbar = ({ isAdmin = false }) => {
           <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
           <a href="create-recipe"><FaPlus /> {open && 'Add Recipe'}</a>
           {isAdmin && (
-            <a href="#"><MdDashboard /> {open && 'Admin Dashboard'}</a>
+            <a href="#"><MdDashboard /> {isOpen && 'Admin Dashboard'}</a>
           )}
           <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
         </nav>
       </div>
 
       <div className="logout-btn">
+
         <a href="#" onClick={handleAuthClick}>
           {open && (isGuest ? 'Sign In' : 'Logout')}
         </a>
+
       </div>
     </div>
   );
