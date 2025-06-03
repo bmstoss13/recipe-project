@@ -4,6 +4,7 @@ import { ToggleButtonGroup, ToggleButton } from '@mui/material';
 import RecipeCard from "../components/RecipeCard";
 import SearchBar from "../components/SearchBar";
 import Navbar from "../components/Navbar";
+import "../styles/RecipePage.css";
 
 //Establish the recipes page, which gives user the option to switch between edamam and user-generated recipes to choose from
 const RecipePage = () => {
@@ -28,16 +29,8 @@ const RecipePage = () => {
                 //     url += `&<span class="math-inline">\{key\}\=</span>{encodeURIComponent(value)}`
                 // });
             };
-            console.log("Final URL being called:", url);
-            console.log("Type value:", type);
             const response = await axios.get(url);
-            console.log("Response headers:", response.headers);
-            console.log("Response status:", response.status);
-            console.log("Response data type:", typeof response.data);
-            console.log("Response data:", response.data);
-            console.log("response: ", response);
             setRecipes(response.data);
-            console.log("recipes: " + recipes)
         }
         catch(e){
             console.error(`There was an error while trying to fetch ${type} recipes: ` + e);
@@ -54,7 +47,9 @@ const RecipePage = () => {
 
     const handleToggleChange = (event, newType) => {
         if(newType !== null){
+            setRecipes([]);
             setRecipeType(newType);
+
         }
     };
 
@@ -63,45 +58,48 @@ const RecipePage = () => {
     };
 
     return(
-        <div>
-            {/* <Navbar isAdmin={true} /> */}
-            <h1>Recipes</h1>
-            <ToggleButtonGroup
-                value={recipeType}
-                exclusive
-                onChange={handleToggleChange}
-                aria-label="recipe type"
-            >
-                <ToggleButton value="edamam" aria-label="official recipes">
-                    Official Recipes
-                </ToggleButton>
-                <ToggleButton value="user-generated" aria-label="user recipes">
-                    User Recipes
-                </ToggleButton>
-            </ToggleButtonGroup>
+        <div className="recipe-page">
+            <div className="recipe-header">
+                <h1>Recipes</h1>
+                <div className="toggle-and-search-container">
+                    <ToggleButtonGroup
+                        value={recipeType}
+                        exclusive
+                        onChange={handleToggleChange}
+                        aria-label="recipe type"
+                    >
+                        <ToggleButton value="edamam" aria-label="official recipes">
+                            Official
+                        </ToggleButton>
+                        <ToggleButton value="user-generated" aria-label="user recipes">
+                            User 
+                        </ToggleButton>
+                    </ToggleButtonGroup>
 
-            <SearchBar onSearch={handleSearch} />
-            {/* {recipeType === 'edamam' && <EdamamFilters onFilterChange={setFilters} />} */}
+                    <div className="header-search-container">
+                        <SearchBar onSearch={handleSearch} />
+                    </div>
+                </div>
+            </div>
 
-            {loading && <p>Loading recipes...</p>}
-            {error && <p className="error-message">{error}</p>}
 
-            <div>
-                {recipes && Array.isArray(recipes) && recipes.length > 0 ? (
-                    recipes.map((recipe) => (
-                        <RecipeCard
-                            key={recipe.id || recipe.uri || recipe.recipe.uri}
-                            recipe={recipe}
-                            isOfficial={recipeType==='edamam'}
-                            //onSaveRecipe={handleSaveRecipe}
-                        />
-                    ))
-                ) : (
-                    !loading && <p>No recipes found.</p>
-                )}
+            <div className="recipe-scroll-container">
+                <div className="recipe-grid">
+                    {recipes && Array.isArray(recipes) && recipes.length > 0 ? (
+                        recipes.map((recipe) => (
+                            <RecipeCard
+                                key={recipe.id || recipe.uri || recipe.recipe.uri}
+                                recipe={recipe}
+                                isOfficial={recipeType === 'edamam'}
+                            />
+                        ))
+                    ) : (
+                        !loading && <p>No recipes found.</p>
+                    )}
+                </div>
             </div>
         </div>
-    )
+    );
 };
 
 export default RecipePage;
