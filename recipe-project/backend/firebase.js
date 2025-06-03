@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import serviceAccount from './permissions.json' with { type: "json" }; 
+import serviceAccount from './permissions.json' assert { type: "json" }; 
 
 if (!admin.apps.length) { 
     admin.initializeApp({
@@ -9,4 +9,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-export default db; 
+// user account creation
+const auth = admin.auth();
+
+export { db, auth };
