@@ -1,4 +1,4 @@
-import db from "../firebase.js";
+import { db } from "../firebase.js";
 import express from "express";
 
 const router = express.Router();

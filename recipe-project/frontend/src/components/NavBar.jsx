@@ -7,7 +7,7 @@ import { MdDashboard } from 'react-icons/md';
 
 
 
-const Navbar = ({ isAdmin = false, onToggle }) => {
+const Navbar = ({ isAdmin = false, onToggle, isOpen }) => {
   const [open, setOpen] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
 
