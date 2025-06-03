@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import recipeRoute from "./routes/recipeRoute.js";
 import create from "./routes/create.js";
+import authRoute from "./routes/authRoute.js";
 
 dotenv.config(); // Load the .env file
 
@@ -22,6 +23,7 @@ app.get("/health", (req, res) => {
   res.json({ status: "OK", timestamp: new Date() });
 });
 
+app.use("/api/auth", authRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/create", create);
 

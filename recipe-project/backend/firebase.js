@@ -9,4 +9,7 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
-export default db;
+// user account creation
+const auth = admin.auth();
+
+export { db, auth };

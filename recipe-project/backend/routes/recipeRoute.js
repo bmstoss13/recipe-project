@@ -1,4 +1,4 @@
-import db from "../firebase.js";
+import { db } from "../firebase.js";
 import axios from "axios";
 import express from "express";
 import dotenv from "dotenv";
