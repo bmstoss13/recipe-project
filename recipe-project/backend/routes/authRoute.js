@@ -16,6 +16,9 @@ router.post('/signup', async (req, res) => {
       email,
       username: displayName,
       createdAt: new Date(),
+      savedRecipes: [],
+      profileImage: '',
+      isAdmin: false,
     });
 
     res.status(201).json({
