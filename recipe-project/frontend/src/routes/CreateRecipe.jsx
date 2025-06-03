@@ -101,7 +101,6 @@ function CreateRecipe() {
 
   return (
     <div>
-      <Navbar isAdmin={false} />
       <div className="createRecipeMain">
         <div className="createRecipeContainer">
           <div className="createRecipeHeaderContainer">
