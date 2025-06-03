@@ -19,6 +19,25 @@
     margin-bottom: 3rem;
   }
   
+  .recipeback-text {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: var(--salmon-accent-color);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .serveInst {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--salmon-accent-color);
+  }
+
+  .recipeback-text:hover {
+    color:#2c1c1c;
+  }
+
   .recipe-text h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;

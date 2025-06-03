@@ -2,10 +2,34 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
 import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaSignInAlt, FaBars } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
+import { useCurrentUser } from './CurrentUser';
+
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const Navbar = ({ isAdmin = false }) => {
+  const { user, profile } = useCurrentUser();
   const [open, setOpen] = useState(true);
   const [isGuest, setIsGuest] = useState(false);
+
+  const [editing, setEditing] = useState(false);
+  const [newPfpUrl, setNewPfpUrl] = useState('');
+
+  const handleProfilePicSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, {
+        profilePic: newPfpUrl,
+      });
+      alert('Profile picture updated!');
+      setNewPfpUrl('');
+      setEditing(false);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to update profile picture');
+    }
+  };
 
   useEffect(() => {
     const guest = localStorage.getItem('isGuest') === 'true';
@@ -28,7 +52,40 @@ const Navbar = ({ isAdmin = false }) => {
 
         <div className="profile">
           <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'}`} />
-          {open && <p className="username">{isGuest ? 'Guest' : 'Username'}</p>}
+          {open && (
+            <div className="user-info">
+              <p className="username">
+                {isGuest
+                  ? 'Guest'
+                  : profile?.username || user?.email || 'User'}
+              </p>
+              <div className="profile-pic-container">
+                {profile?.profilePic && !isGuest && (
+                  <>
+                    <img
+                      src={profile.profilePic}
+                      alt="Profile"
+                      className="pfp"
+                      onMouseEnter={() => setEditing(true)}
+                      onMouseLeave={() => setEditing(false)}
+                    />
+                    {editing && (
+                      <form className="edit-pfp-form" onSubmit={handleProfilePicSubmit}>
+                        <input
+                          type="text"
+                          placeholder="Paste new image URL"
+                          value={newPfpUrl}
+                          onChange={(e) => setNewPfpUrl(e.target.value)}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <button type="submit">Save</button>
+                      </form>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
 
         <hr />

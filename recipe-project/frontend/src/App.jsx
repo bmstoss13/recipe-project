@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/guest" element={<GuestPage />} /> {/** Placeholder*/}
+        <Route path="/home" element={<GuestPage />} /> {/** Placeholder*/}
         <Route path="/recipes" element={<RecipePage />} />
         <Route path="/auth" element={<LoginSignup />} />
         <Route path="/recipeDetail" element={<RecipeDetail />} />

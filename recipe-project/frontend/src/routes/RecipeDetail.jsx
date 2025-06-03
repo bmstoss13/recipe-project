@@ -2,11 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import '../styles/RecipeDetail.css';
 import ChatAssistant from '../components/ChatBot';
-
+import { useNavigate } from 'react-router-dom';
 
 const RecipeDetail = () => {
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0);
+  const navigate = useNavigate();
 
   {/*PLACEHOLDER*/}
   const [comments, setComments] = useState([
@@ -36,6 +37,7 @@ const RecipeDetail = () => {
 
   return (
     <div className="recipe-detail-container">
+        <span onClick={() => navigate(-1)} className="recipeback-text">← Back</span>
         <div className="recipe-detail">
         <div className="recipe-header">
             <div className="recipe-text">
@@ -66,6 +68,7 @@ const RecipeDetail = () => {
                 </li>
             ))}
             </ul>
+            <h2 className="serveInst">Serve and Enjoy!</h2>
         </section>
 
         <section className="feedback">
