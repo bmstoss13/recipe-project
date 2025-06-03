@@ -40,7 +40,7 @@ const Navbar = ({ isAdmin = false }) => {
           {isAdmin && (
             <a href="#"><MdDashboard /> {open && 'Admin Dashboard'}</a>
           )}
-          <a href="#">{open && 'TEMP - recipe detail'}</a>
+          <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
         </nav>
       </div>
 
