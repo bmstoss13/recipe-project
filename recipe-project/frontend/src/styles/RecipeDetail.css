@@ -19,6 +19,25 @@
     margin-bottom: 3rem;
   }
   
+  .recipeback-text {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    color: var(--salmon-accent-color);
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .serveInst {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--salmon-accent-color);
+  }
+
+  .recipeback-text:hover {
+    color:#2c1c1c;
+  }
+
   .recipe-text h1 {
     font-size: 2rem;
     margin-bottom: 0.5rem;
@@ -99,7 +118,24 @@
     display: block;
     margin-bottom: 0.25rem;
   }
+
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
   
+  .feedback-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .feedback-input-group {
+    display: flex;
+    flex-direction: column;
+  }
+
   .feedback {
     margin-top: 3rem;
   }
@@ -141,7 +177,7 @@
   }
   
   .post-btn {
-    margin-top: 1.5rem;
+    width: 10%;
     padding: 0.6rem 1.2rem;
     background-color: #f38181;
     color: white;
@@ -153,9 +189,7 @@
   }
   
   .post-btn:hover {
-    background: none;
-    color: var(--salmon-accent-color);
-    border: 1px solid var(--salmon-accent-color);
+    background: rgb(197, 121, 121);
   }
   
   .comments-section {

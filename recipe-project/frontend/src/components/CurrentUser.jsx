@@ -2,16 +2,20 @@ import { useEffect, useState } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
+
 export function useCurrentUser() {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
+
   useEffect(() => {
     const isGuest = localStorage.getItem('isGuest') === 'true';
+
     if (isGuest) {
       setUser({ isGuest: true });
       setProfile({ username: 'Guest' });
       return;
     }
+
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
         setUser(firebaseUser);
@@ -27,12 +31,9 @@ export function useCurrentUser() {
         setProfile(null);
       }
     });
+
     return () => unsubscribe();
   }, []);
+
   return { user, profile };
 }
-
-
-
-
-

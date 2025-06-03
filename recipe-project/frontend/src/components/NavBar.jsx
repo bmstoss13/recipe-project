@@ -6,6 +6,7 @@ import { useCurrentUser } from './CurrentUser';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { toast } from 'react-toastify';
+
 const Navbar = () => {
   const { user, profile } = useCurrentUser();
   const [open, setOpen] = useState(true);
@@ -13,14 +14,17 @@ const Navbar = () => {
   const [editing, setEditing] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [newPfpUrl, setNewPfpUrl] = useState('');
+
   useEffect(() => {
     const guest = localStorage.getItem('isGuest') === 'true';
     setIsGuest(guest);
   }, []);
+
   const handleAuthClick = () => {
     localStorage.removeItem('isGuest');
     window.location.href = isGuest ? '/auth' : '/';
   };
+
   const handleProfilePicSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -35,6 +39,7 @@ const Navbar = () => {
       toast.error('Failed to update profile picture');
     }
   };
+
   return (
     <>
       <div className={`sidebar ${open ? 'open' : 'closed'}`}>
@@ -44,6 +49,7 @@ const Navbar = () => {
               <FaBars />
             </button>
           </div>
+
           <div className="profile">
             <div
               className="profile-pic-wrapper"
@@ -63,6 +69,7 @@ const Navbar = () => {
                 Change
               </div>
             </div>
+
             {open && (
               <div className="user-info">
                 <p className="username">
@@ -71,7 +78,9 @@ const Navbar = () => {
               </div>
             )}
           </div>
+
           <hr />
+
           <nav className="nav-links">
             <a href="#"><FaSearch /> {open && 'Browse Recipes'}</a>
             <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
@@ -82,13 +91,14 @@ const Navbar = () => {
             <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
           </nav>
         </div>
+
         <div className="logout-btn">
           <a href="#" onClick={handleAuthClick}>
             {open && (isGuest ? 'Sign In' : 'Logout')}
           </a>
         </div>
       </div>
-      {/* :white_check_mark: Modal */}
+
       {modalOpen && (
         <div className="modal-overlay" onClick={() => setModalOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -112,4 +122,5 @@ const Navbar = () => {
     </>
   );
 };
+
 export default Navbar;

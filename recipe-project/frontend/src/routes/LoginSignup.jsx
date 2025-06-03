@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import '../styles/LoginSignup.css';
 
+
 const LoginSignup = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -16,6 +17,7 @@ const LoginSignup = () => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
   const [error, setError] = useState('');
 
   const toggleMode = () => {
@@ -26,14 +28,35 @@ const LoginSignup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+  
     try {
       if (isSignup) {
-        await createUserWithEmailAndPassword(auth, email, password);
-        alert('Account created!');
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+  
+        const response = await fetch('http://localhost:5000/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            uid: user.uid,
+            email: user.email,
+            displayName: username,
+          }),
+        });
+  
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || 'Signup failed');
+        }
+  
+        alert('Account created! Redirecting to login...');
+        setSearchParams({ mode: 'login' }); 
+        return; 
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        alert('Signed in!');
+        navigate('/home'); {/*REPLACE WITH THE DASHBOARD*/}
       }
     } catch (err) {
       console.error(err);
@@ -42,26 +65,18 @@ const LoginSignup = () => {
       } else if (err.code === 'auth/invalid-email') {
         setError('Please enter a valid email address.');
       } else {
-        setError(err.message);
+        setError(err.message || 'An unexpected error occurred.');
       }
     }
   };
-
-  // const handleGoogle = async () => {
-  //   try {
-  //     await signInWithPopup(auth, provider);
-  //     alert('Signed in with Google!');
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-
+  
+  
   return (
     <div className="auth-page">
       <div className="auth-container">
         <div className="back-wrapper">
           <span onClick={() => navigate('/')} className="back-text">
-            ⬅ Back
+            ← Back
           </span>
         </div>
 
@@ -82,6 +97,15 @@ const LoginSignup = () => {
             onChange={e => setPassword(e.target.value)}
             required
           />
+          {isSignup && (
+            <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          )}
           <button type="submit">
             {isSignup ? 'Create Account' : 'Login'}
           </button>
