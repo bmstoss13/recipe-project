@@ -5,6 +5,7 @@ import cors from "cors";
 import recipeRoute from "./routes/recipeRoute.js";
 import create from "./routes/create.js";
 import authRoute from "./routes/authRoute.js";
+import admin from "./routes/admin.js";
 
 dotenv.config(); // Load the .env file
 
@@ -26,6 +27,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/create", create);
+app.use("/admin", admin);
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

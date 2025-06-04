@@ -18,6 +18,11 @@
     overflow: hidden;
 }
 
+.adminSpacing {
+    width: 100%;
+    padding: 3rem;
+}
+
 .adminHeaderText {
     font-weight: 600;
     font-size: 2rem;
@@ -62,7 +67,7 @@
 }
 
 .adminSubHeader {
-    margin: 2rem 0rem;
+    margin: 2rem 0rem 1rem 0rem;
 }
 
 .adminSubHeaderText {
@@ -71,4 +76,128 @@
     line-height: 34px;
 
     color: #000000;
+}
+
+.adminRecipeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.adminRecipeChild {
+    width:100%;
+    height: 220px;
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border: 3px solid #F87575;
+    border-radius: 15px;
+
+    display:flex;
+    flex-direction: column;
+
+    padding: 1.5rem 2rem;
+}
+
+.adminRecipeChildTitle {
+    font-weight: 500;
+    font-size: 1.4rem;
+
+    color: #000000;
+}
+
+.adminRecipeChildUsername {
+    margin-top: 3px;
+    font-weight: 400;
+    font-size: 1rem;
+
+    color: #565656;
+}
+
+.adminRecipeChildDescription {
+    margin-top: 15px;
+    font-weight: 400;
+    font-size: 1rem;
+
+    color: #565656;
+}
+
+.adminRecipeChildDescription {
+    margin-top: 12px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    font-size: 1rem;
+
+    color: #565656;
+}
+
+.adminRecipeNumbersContainer {
+    display:flex;
+    gap: 1.5rem;
+}
+
+.adminRecipeNumbersChild {
+    display:flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.adminRecipeNumbersText {
+    font-weight: 400;
+    font-size: 1rem;
+
+    color: #565656;
+}
+
+.adminRecipeNumbersIcon {
+    color: #565656
+}
+
+.adminRecipeChildButtons {
+    display:flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.adminRecipeChildView {
+    padding: 0.5rem 2rem;
+
+    font-weight: 500;
+    font-size: 1rem;
+
+    background: #F87575;
+    border-radius: 5px;
+    border: none;
+    color: white;
+
+    cursor: pointer;
+}
+
+.adminRecipeChildPublish {
+    padding: 0.5rem 2rem;
+
+    font-weight: 500;
+    font-size: 1rem;
+
+    background: #45BD4B;
+    border-radius: 5px;
+    border: none;
+    color: white;
+
+    cursor: pointer;
+}
+
+.adminRecipeChildReject {
+    padding: 0.5rem 2rem;
+
+    font-weight: 500;
+    font-size: 1rem;
+
+    background: #EB4545;
+    border-radius: 5px;
+    border: none;
+    color: white;
+
+    cursor: pointer;
 }
