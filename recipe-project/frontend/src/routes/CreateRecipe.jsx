@@ -89,8 +89,7 @@ function CreateRecipe() {
       const response = await axios.post('http://localhost:5050/create/recipe', data);
 
       if (response.status === 200) {
-        console.log(response.data)
-        // navigate()
+        navigate(`/recipe/${response.data.recipeId}`)
       } else {
         console.error("Failed to submit recipe.");
       }
