@@ -23,7 +23,12 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe }) => {
             toast.info("Recipe removed from your saved list.");
         }
         if (onSaveRecipe && isOfficial) {
-            onSaveRecipe(recipe.recipe.uri);
+        const encodedId = encodeURIComponent(recipe.recipe.uri);
+        const newEntry = {
+            type: 'edamam',
+            id: encodedId
+        };
+        onSaveRecipe(newEntry); 
         }
     };
     return (
