@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import '../styles/RecipeDetail.css';
 
 const Comments = () => {
   const [comment, setComment] = useState('');

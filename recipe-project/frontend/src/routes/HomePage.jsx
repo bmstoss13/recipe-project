@@ -21,7 +21,7 @@ const HomePage = () => {
               onClick={(e) => {
                 e.preventDefault();
                 localStorage.setItem('isGuest', 'true');
-                window.location.href = '/home'; 
+                window.location.href = '/my-recipes'; 
               }}
             >
               Continue as guest
