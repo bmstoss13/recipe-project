@@ -41,8 +41,8 @@ router.get('/saved', authenticate, async (req, res) => {
       recipes.push(...batch.filter(Boolean));
     }
     res.json(recipes);
-  } catch (err) {
-    console.error('Error in /saved route:', err);
+  } 
+  catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
@@ -78,10 +78,15 @@ router.post('/unsave/:id', authenticate, async (req, res) => {
 });
 
 // Save a recipe
-router.post('/save/:id', authenticate, async (req, res) => {
+router.post('/save', authenticate, async (req, res) => {
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ error: 'Recipe ID is required' });
+  }
+
   try {
     await db.collection('users').doc(req.user.uid).set(
-      { savedRecipes: admin.firestore.FieldValue.arrayUnion(req.params.id) },
+      { savedRecipes: admin.firestore.FieldValue.arrayUnion(id) },
       { merge: true }
     );
     res.json({ success: true });

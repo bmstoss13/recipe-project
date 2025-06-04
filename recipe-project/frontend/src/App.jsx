@@ -28,7 +28,6 @@ function App() {
               <Route path="/edit-recipe/:id" element={<EditRecipe />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/recipes" element={<RecipePage />} />
-              {/* <Route path="/recipes/:id" element={<RecipePage />} /> PLACE HOLDER FOR VIEWING SPECIFIC RECIPE*/}
               <Route path="/auth" element={<LoginSignup />} />
               <Route path="/recipeDetail" element={<RecipeDetail />} />
               <Route path="/my-recipes" element={<MyRecipesPage />} />

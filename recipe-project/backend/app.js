@@ -5,9 +5,10 @@ import cors from "cors";
 import recipeRoute from "./routes/recipeRoute.js";
 import create from "./routes/create.js";
 import authRoute from "./routes/authRoute.js";
-import myRecipesRoute from './routes/myRecipesRoute.js';
+import admin from "./routes/admin.js";
+import myRecipesRoute from "./routes/myRecipesRoute.js";
 
-import OpenAI from "openai"
+import OpenAI from "openai";
 
 dotenv.config(); // Load the .env file
 
@@ -29,16 +30,14 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/create", create);
-app.use('/api/my-recipes', myRecipesRoute);
-
+app.use("/admin", admin);
+app.use("/api/my-recipes", myRecipesRoute);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-let messages = [
-  { role: "system", content: "You are a helpful assistant." }
-];
+let messages = [{ role: "system", content: "You are a helpful assistant." }];
 
 app.post("/chat", async (req, res) => {
   const { userMessage } = req.body;
@@ -59,8 +58,6 @@ app.post("/chat", async (req, res) => {
     res.status(500).json({ error: "Failed to get response from OpenAI" });
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);

@@ -4,6 +4,7 @@ import '../styles/RecipeDetail.css';
 import ChatAssistant from '../components/ChatBot';
 import { useNavigate } from 'react-router-dom';
 import Comments from '../components/Comments';
+import Navbar from "../components/Navbar";
 
 const RecipeDetail = () => {
   const navigate = useNavigate();
@@ -22,10 +23,14 @@ const RecipeDetail = () => {
   };
 
   return (
+    <div className='myrecipe-page-container'>
+    <Navbar/>
     <div className="recipe-detail-container">
-        <span onClick={() => navigate(-1)} className="recipeback-text">← Back</span>
+      <span className="recipeback-text" onClick={() => navigate(-1)}>
+        ← Back
+      </span>
         <div className="recipe-detail">
-        <div className="recipe-header">
+        <div className="recipeDetail-header">
             <div className="recipe-text">
             <h1>{recipe.title}</h1>
             <p>{recipe.description}</p>
@@ -64,6 +69,7 @@ const RecipeDetail = () => {
         💬 Need help?
       </div>
       <ChatAssistant />
+    </div>
     </div>
   );
 };
