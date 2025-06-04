@@ -8,7 +8,7 @@ export async function getCreatedRecipes(userId) {
   }
 
 
- // Get all recipes saved by the user.
+// Get all recipes saved by the user.
 export async function getSavedRecipes(userId) {
   const userDoc = await db.collection('users').doc(userId).get();
   const savedRecipes = userDoc.data()?.savedRecipes || [];

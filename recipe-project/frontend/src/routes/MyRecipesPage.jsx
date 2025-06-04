@@ -7,6 +7,12 @@ import { useNavigate } from "react-router-dom";
 import Navbar from '../components/Navbar';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from '@mui/material/Button';
 
 export default function MyRecipesPage() {
   const [tab, setTab] = useState("created");
@@ -17,6 +23,8 @@ export default function MyRecipesPage() {
   const [authChecked, setAuthChecked] = useState(false);
   const navigate = useNavigate()
   const auth = getAuth();
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [recipeToDelete, setRecipeToDelete] = useState(null);
 
   // Listen for auth state changes
   useEffect(() => {
@@ -52,7 +60,6 @@ export default function MyRecipesPage() {
 
   // Delete a created recipe
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this recipe?")) return;
     const headers = await getAuthHeaders();
     await axios.delete(`/api/my-recipes/${id}`, { headers });
     setRecipes((prev) => prev.filter((r) => r.id !== id));
@@ -63,7 +70,10 @@ export default function MyRecipesPage() {
   const handleUnsave = async (id) => {
     const headers = await getAuthHeaders();
     await axios.post(`/api/my-recipes/unsave/${id}`, {}, { headers });
-    setRecipes((prev) => prev.filter((r) => r.id !== id));
+    if (tab === "saved") {
+      setRecipes((prev) => prev.filter((r) => r.id !== id));
+    }
+    setSavedRecipeIds((prev) => prev.filter((recipeId) => recipeId !== id));
     toast.success("Recipe unsaved!");
   };
 
@@ -74,69 +84,111 @@ export default function MyRecipesPage() {
 
   // Get saved recipes 
   useEffect(() => {
-    fetch('/api/saved')
-      .then(res => res.json())
-      .then(data => {
-        // Assuming data is an array of recipe objects
-        setSavedRecipeIds(data.map(recipe => recipe.id));
-      });
-  }, []);
+    if (!user) return;
+    getAuthHeaders()
+      .then(headers => 
+        axios.get('/api/my-recipes/saved', { headers })
+      )
+      .then(res => {
+        setSavedRecipeIds(res.data.map(recipe => recipe.id));
+      })
+      .catch(err => console.error('Error fetching saved recipes:', err));
+  }, [user]);
 
   // Save a recipe
   const handleSave = async (id) => {
     const headers = await getAuthHeaders();
     await axios.post(`/api/my-recipes/save/${id}`, {}, { headers });
+    setSavedRecipeIds((prev) => [...prev, id]);
     toast.success("Recipe saved!");
   };
 
   if (!authChecked) return <div>Loading...</div>;
 
   return (
-    <div className="page">
-      <h1 className="my-recipes-header">My Recipes</h1>
-      <div className="tabRow">
-        <div className="tabOuter">
-            <button
-                className={`tabBtn${tab === "created" ? " active" : ""}`}
-                onClick={() => setTab("created")}
-                // disabled={tab === "created"}
-            >
-                Created
-            </button>
-            <button
-                className={`tabBtn${tab === "saved" ? " active" : ""}`}
-                onClick={() => setTab("saved")}
-                // disabled={tab === "saved"}
-            >
-                Saved
-            </button>
+    <div className="recipe-wrapper">
+      <Navbar />
+      <div className="my-recipes-main-content">
+        <h1 className="my-recipes-header">My Recipes</h1>
+        <div className="tabRow">
+          <div className="tabOuter">
+              <button
+                  className={`tabBtn${tab === "created" ? " active" : ""}`}
+                  onClick={() => setTab("created")}
+              >
+                  Created
+              </button>
+              <button
+                  className={`tabBtn${tab === "saved" ? " active" : ""}`}
+                  onClick={() => setTab("saved")}
+              >
+                  Saved
+              </button>
+          </div>
+          <button
+              onClick={() => navigate("/create-recipe")}
+              className="createBtn"
+          >
+              + Create Recipe
+          </button>
         </div>
-        <button
-            onClick={() => navigate("/create-recipe")}
-            className="createBtn"
-        >
-            + Create Recipe
-        </button>
-        </div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <div className="grid">
-          {recipes.map((recipe) => (
-            <MyRecipesCard
-              key={recipe.id}
-              recipe={recipe}
-              tab={tab}
-              onView={() => navigate(`/recipeDetails/${recipe.id}`)}
-              onEdit={() => handleEdit(recipe.id)}
-              onDelete={() => handleDelete(recipe.id)}
-              onSave={() => handleSave(recipe.id)}
-              onUnsave={() => handleUnsave(recipe.id)}
-              isSaved={savedRecipeIds.includes(recipe.id)} // checks list/array of saved recipe IDS in firebase
-            />
-          ))}
-        </div>
-      )}
+        {loading ? (
+          <p>Loading your recipes...</p>
+        ) : (
+          <div className="grid">
+            {recipes.length === 0 ? (
+              <p style={{ width: '100%' }}>
+                {tab === 'saved'
+                  ? 'Start saving recipes to view them here!'
+                  : 'No recipes created yet.'}
+              </p>
+            ) : (
+              recipes.map((recipe) => (
+                <MyRecipesCard
+                  key={recipe.id}
+                  recipe={recipe}
+                  tab={tab}
+                  onView={() => navigate(`/recipeDetail/${recipe.id}`)}
+                  onEdit={() => handleEdit(recipe.id)}
+                  onDelete={() => {
+                    setRecipeToDelete(recipe.id);
+                    setOpenDeleteDialog(true);
+                  }}
+                  onSave={() => handleSave(recipe.id)}
+                  onUnsave={() => handleUnsave(recipe.id)}
+                  isSaved={savedRecipeIds.includes(recipe.id)}
+                />
+              ))
+            )}
+          </div>
+        )}
+      </div>
+      {/* Material UI Delete Confirmation Dialog */}
+      <Dialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+      >
+        <DialogTitle>Delete Recipe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this recipe?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDeleteDialog(false)}>
+            Cancel
+          </Button>
+          <Button
+            onClick={async () => {
+              await handleDelete(recipeToDelete);
+              setOpenDeleteDialog(false);
+            }}
+            color="error"
+          >
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
