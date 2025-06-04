@@ -53,8 +53,8 @@ const Navbar = () => {
           <div className="profile">
             <div
               className="profile-pic-wrapper"
-              onMouseEnter={() => setEditing(true)}
-              onMouseLeave={() => setEditing(false)}
+              onMouseEnter={() => !isGuest && setEditing(true)}
+              onMouseLeave={() => !isGuest && setEditing(false)}
             >
               {profile?.profileImage && !isGuest ? (
                 <img
@@ -63,11 +63,13 @@ const Navbar = () => {
                   className={`profile-icon-img ${open ? 'expanded' : 'collapsed'}`}
                 />
               ) : (
-                <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'}`} />
+                <FaUserCircle className={`profile-icon ${open ? 'expanded' : 'collapsed'} ${isGuest ? 'no-hover' : ''}`} />
               )}
+              {!isGuest && (
               <div className="change-pfp-overlay" onClick={() => setModalOpen(true)}>
                 Change
               </div>
+              )}
             </div>
 
             {open && (
@@ -82,11 +84,11 @@ const Navbar = () => {
           <hr />
 
           <nav className="nav-links">
-            <a href="#"><FaSearch /> {open && 'Browse Recipes'}</a>
-            <a href="#"><FaBookOpen /> {open && 'My Recipes'}</a>
-            <a href="#"><FaPlus /> {open && 'Add Recipe'}</a>
+            <a href="/recipes"><FaSearch /> {open && 'Browse Recipes'}</a>
+            <a href="/my-recipes"><FaBookOpen /> {open && 'My Recipes'}</a>
+            <a href="/create-recipe"><FaPlus /> {open && 'Add Recipe'}</a>
             {profile?.isAdmin && (
-              <a href="#"><MdDashboard /> {open && 'Admin Dashboard'}</a>
+              <a href="/admin"><MdDashboard /> {open && 'Admin Dashboard'}</a>
             )}
             <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
           </nav>

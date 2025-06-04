@@ -1,0 +1,103 @@
+.page {
+    background: #F7F7FF;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  
+  .my-recipes-header {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #1C0F13
+  }
+  
+  .tabRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    width: 100%;
+  }
+
+  .tabOuter {
+    background: #fff;
+    border-radius: 8px;
+    padding: 0.4rem;
+    display: flex;
+    border: 2px solid #F87575;
+    width: fit-content;
+  }
+
+  .tabBtn {
+    background: #fff;
+    color: #1C0F13;
+    border: none;
+    outline: none;
+    font-weight: 550;
+    font-size: 1rem;
+    padding: 0.4rem 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .tabBtn.active {
+    background: #F87575;
+    color: #fff;
+  }
+  
+  .tabBtn:first-child {
+    border-radius: 8px;
+  }
+  
+  .tabBtn:last-child {
+    border-radius: 8px;
+  }
+  
+  .tabBtn:disabled {
+    cursor: default;
+  }
+  
+  .createBtn {
+    background: #F87575;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-weight: 550;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-left: 0;
+    transition: background 0.2s, box-shadow 0.3s cubic-bezier(0.4,0.2,0.2,1), transform 0.3s cubic-bezier(0.4,0.2,0.2,1);
+  }
+  .createBtn:hover {
+    box-shadow: 0 12px 32px 0 rgba(0,0,0,0.22), 0 2px 8px 0 rgba(0,0,0,0.18);
+    transform: translateY(-8px) scale(1.04);
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    justify-items: start;
+    margin-left: 0;
+  }
+
+  @media (max-width: 1200px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }

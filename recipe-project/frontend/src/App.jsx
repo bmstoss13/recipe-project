@@ -6,6 +6,7 @@ import CreateRecipe from './routes/CreateRecipe'
 import EditRecipe from './routes/EditRecipe'
 import AdminDashboard from './routes/AdminDashboard'
 import RecipePage from './routes/RecipePage';
+import MyRecipesPage from './routes/MyRecipesPage';
 
 import Navbar from './components/Navbar'; 
 import { ToastContainer } from 'react-toastify'; 
@@ -27,9 +28,9 @@ function App() {
               <Route path="/edit-recipe/:id" element={<EditRecipe />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/recipes" element={<RecipePage />} />
-              {/* <Route path="/recipes/:id" element={<RecipePage />} /> PLACE HOLDER FOR VIEWING SPECIFIC RECIPE*/}
               <Route path="/auth" element={<LoginSignup />} />
               <Route path="/recipeDetail" element={<RecipeDetail />} />
+              <Route path="/my-recipes" element={<MyRecipesPage />} />
             </Routes>
       </Router>
       <ToastContainer position="top-right" autoClose={3000} />
