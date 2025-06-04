@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 
 import { IoIosTimer } from "react-icons/io";
@@ -133,7 +133,9 @@ function AdminDashboard() {
                                     </div>
                                 </div>
                                 <div className="adminRecipeChildButtons">
-                                    <button className="adminRecipeChildView" type="button" >View Details</button>
+                                    <Link to={`/recipeDetail/${p.id}`}>
+                                        <button className="adminRecipeChildView" type="button">View Details</button>
+                                    </Link>
                                     <button className="adminRecipeChildPublish" type="button" onClick={() => handlePublish(p.id)}>Publish</button>
                                     <button className="adminRecipeChildReject" type="button" onClick={() => handleReject(p.id)}>Reject</button>
                                 </div>
@@ -165,7 +167,9 @@ function AdminDashboard() {
                                     </div>
                                 </div>
                                 <div className="adminRecipeChildButtons">
-                                    <button className="adminRecipeChildView" type="button">View Details</button>
+                                    <Link to={`/recipeDetail/${p.id}`}>
+                                        <button className="adminRecipeChildView" type="button">View Details</button>
+                                    </Link>
                                     <button className="adminRecipeChildReject" type="button" onClick={() => handleReject(p.id)}>Reject</button>
                                 </div>
                             </div>
@@ -196,7 +200,9 @@ function AdminDashboard() {
                                     </div>
                                 </div>
                                 <div className="adminRecipeChildButtons">
-                                    <button className="adminRecipeChildView" type="button">View Details</button>
+                                    <Link to={`/recipeDetail/${p.id}`}>
+                                        <button className="adminRecipeChildView" type="button">View Details</button>
+                                    </Link>
                                     <button className="adminRecipeChildPublish" type="button" onClick={() => handlePublish(p.id)}>Publish</button>
                                 </div>
                             </div>
