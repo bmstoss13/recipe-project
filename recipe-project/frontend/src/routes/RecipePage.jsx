@@ -23,7 +23,7 @@ const RecipePage = () => {
         try{
             let url = `/api/recipes/${type}`;
             if (query) {
-                url += `?q=${encodeURIComponent(query)}`;
+                url += `?q=${encodeURIComponent(query.toLowerCase())}`;
                 console.log("url: " + url)
                 // Object.entries(filters).forEach(([key, value]) => {
                 //     url += `&<span class="math-inline">\{key\}\=</span>{encodeURIComponent(value)}`

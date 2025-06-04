@@ -1,5 +1,6 @@
 .search-bar{
     display: flex;
+    flex: 1;
     align-items:center;
     background: #F7F7FF;
     backdrop-filter: blur(6px);
@@ -9,7 +10,7 @@
     width: 100%;
     max-width: 500px;
     transition: box-shadow 0.3s ease;
-    /* margin: 0 auto; */
+    margin: 0 auto;
 }
 
 .search-bar:hover,
