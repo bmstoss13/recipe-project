@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import useCurrentUser from '../components/CurrentUser.jsx'
 
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -18,6 +19,8 @@ function CreateRecipe() {
   const [instructions, setInstructions] = useState(['']);
   const [errorMessage, setErrorMessage] = useState("");
   const { id } = useParams();
+
+  const { user, profile } = useCurrentUser();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,7 +99,7 @@ function CreateRecipe() {
 
     const data = {
       "recipe_id": id,
-      "user_id": "tempid",
+      "user_id": user.uid,
       "title": name,
       "description": description,
       "prep_time": prepTime,
@@ -110,8 +113,7 @@ function CreateRecipe() {
       const response = await axios.put('http://localhost:5050/create/edit', data);
 
       if (response.status === 200) {
-        console.log(response.data)
-        // navigate()
+        navigate(`/recipe/${response.data.recipeId}`)
       } else {
         console.error("Failed to submit recipe.");
       }
