@@ -4,10 +4,12 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import MyRecipesCard from "../components/MyRecipesCard";
 import "../styles/MyRecipesPage.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from '../components/Navbar';
 
 export default function MyRecipesPage() {
   const [tab, setTab] = useState("created");
   const [recipes, setRecipes] = useState([]);
+  const [savedRecipeIds, setSavedRecipeIds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [authChecked, setAuthChecked] = useState(false);
@@ -63,10 +65,20 @@ export default function MyRecipesPage() {
 
   // Edit a recipe (navigate to edit page)
   const handleEdit = (id) => {
-    window.location.href = `/edit-recipe/${id}`;
+    navigate(`/edit-recipe/${id}`);
   };
 
-  // Save a recipe (if you want to add this button somewhere)
+  // Get saved recipes 
+  useEffect(() => {
+    fetch('/api/saved')
+      .then(res => res.json())
+      .then(data => {
+        // Assuming data is an array of recipe objects
+        setSavedRecipeIds(data.map(recipe => recipe.id));
+      });
+  }, []);
+
+  // Save a recipe
   const handleSave = async (id) => {
     const headers = await getAuthHeaders();
     await axios.post(`/api/my-recipes/save/${id}`, {}, { headers });
@@ -96,7 +108,7 @@ export default function MyRecipesPage() {
             </button>
         </div>
         <button
-            onClick={() => (window.location.href = "/create-recipe")}
+            onClick={() => navigate("/create-recipe")}
             className="createBtn"
         >
             + Create Recipe
@@ -111,11 +123,12 @@ export default function MyRecipesPage() {
               key={recipe.id}
               recipe={recipe}
               tab={tab}
-              onView={() => navigate(`/recipe/${recipe.id}`)}
+              onView={() => navigate(`/recipeDetails/${recipe.id}`)}
               onEdit={() => handleEdit(recipe.id)}
               onDelete={() => handleDelete(recipe.id)}
               onSave={() => handleSave(recipe.id)}
               onUnsave={() => handleUnsave(recipe.id)}
+              isSaved={savedRecipeIds.includes(recipe.id)} // checks list/array of saved recipe IDS in firebase
             />
           ))}
         </div>

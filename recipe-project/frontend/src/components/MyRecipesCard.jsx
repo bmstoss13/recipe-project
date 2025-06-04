@@ -5,6 +5,7 @@ import { FaRegEdit } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
 import { CiImageOn } from "react-icons/ci";
 import "../styles/MyRecipesCard.css";
+import { Tooltip }from 'react-tooltip';
 
 export default function RecipeCard({
   recipe,
@@ -25,19 +26,63 @@ export default function RecipeCard({
         <div className="my-recipes-title">{recipe.title}</div>
         <div className="my-recipes-description">{recipe.description}</div>
         <div className="my-recipes-actions" style={{ justifyContent: 'flex-end' }}>
-          <button onClick={onView} className="my-recipes-icon-btn" title="View"><IoEyeOutline /></button>
-          {tab === "created" ? (
-            <>
-              <button onClick={isSaved ? onUnsave : onSave} className="my-recipes-icon-btn" title={isSaved ? "Unsave" : "Save"}>
-                {isSaved ? <FaBookmark /> : <FaRegBookmark />}
-              </button>
-              <button onClick={onEdit} className="my-recipes-icon-btn" title="Edit"><FaRegEdit /></button>
-              <button onClick={onDelete} className="my-recipes-icon-btn" title="Delete"><RiDeleteBin6Line /></button>
-            </>
-          ) : (
-            <button onClick={onUnsave} className="my-recipes-icon-btn" title="Unsave"><FaBookmark /></button>
-          )}
-        </div>
+            <button
+                onClick={onView}
+                data-tooltip-id={`view-tooltip-${recipe.id}`}
+                data-tooltip-content="View"
+                className="my-recipes-icon-btn"
+            >
+                <IoEyeOutline />
+            </button>
+            <Tooltip id={`view-tooltip-${recipe.id}`} delayShow={0} />
+
+            {tab === "created" ? (
+                <>
+                <button
+                    data-tooltip-id={`save-tooltip-${recipe.id}`}
+                    data-tooltip-content={isSaved ? "Unsave" : "Save"}
+                    onClick={isSaved ? onUnsave : onSave}
+                    className="my-recipes-icon-btn"
+                >
+                    {isSaved ? <FaBookmark /> : <FaRegBookmark />}
+                </button>
+                <Tooltip id={`save-tooltip-${recipe.id}`} delayShow={0} />
+
+                <button
+                    data-tooltip-id={`edit-tooltip-${recipe.id}`}
+                    data-tooltip-content="Edit"
+                    onClick={onEdit}
+                    className="my-recipes-icon-btn"
+                >
+                    <FaRegEdit />
+                </button>
+                <Tooltip id={`edit-tooltip-${recipe.id}`} delayShow={0} />
+
+                <button
+                    data-tooltip-id={`delete-tooltip-${recipe.id}`}
+                    data-tooltip-content="Delete"
+                    onClick={onDelete}
+                    className="my-recipes-icon-btn"
+                >
+                    <RiDeleteBin6Line />
+                </button>
+                <Tooltip id={`delete-tooltip-${recipe.id}`} delayShow={0} />
+                </>
+            ) : (
+                <>
+                <button
+                    data-tooltip-id={`unsave-tooltip-${recipe.id}`}
+                    data-tooltip-content="Unsave"
+                    onClick={onUnsave}
+                    className="my-recipes-icon-btn"
+                >
+                    <FaBookmark />
+                </button>
+                <Tooltip id={`unsave-tooltip-${recipe.id}`} delayShow={0} />
+                </>
+            )}
+            </div>
+        <Tooltip id="my-recipes-tooltip" delayShow={0} />
       </div>
     </div>
   );

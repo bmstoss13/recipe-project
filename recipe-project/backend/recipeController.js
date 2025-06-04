@@ -1,7 +1,7 @@
 import { db } from './firebase.js';
 import admin from 'firebase-admin';
 
-//Get all recipes created by the hardcoded user.
+//Get all recipes created by the user.
 export async function getCreatedRecipes(userId) {
     const snapshot = await db.collection('userRecipes').where('user_id', '==', userId).get();
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
