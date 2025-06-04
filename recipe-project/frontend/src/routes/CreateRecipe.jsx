@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import useCurrentUser from '../components/CurrentUser.jsx'
 
 
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -19,6 +20,8 @@ function CreateRecipe() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
+
+  const { user, profile } = useCurrentUser();
 
   const handleIngredientChange = (idx, e) => {
     const newIngredients = [...ingredients];
@@ -75,7 +78,7 @@ function CreateRecipe() {
     }
 
     const data = {
-      "user_id": "tempid",
+      "user_id": user.uid,
       "title": name,
       "description": description,
       "prep_time": prepTime,
@@ -87,7 +90,6 @@ function CreateRecipe() {
 
     try {
       const response = await axios.post('http://localhost:5050/create/recipe', data);
-
       if (response.status === 200) {
         navigate(`/recipe/${response.data.recipeId}`)
       } else {

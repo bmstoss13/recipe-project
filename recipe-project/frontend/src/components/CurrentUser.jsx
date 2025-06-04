@@ -37,3 +37,5 @@ export function useCurrentUser() {
 
   return { user, profile };
 }
+
+export default useCurrentUser

@@ -1,0 +1,74 @@
+.adminMain {
+    /* margin-left: calc(60px + 2rem); */
+    background-color: #F7F7FF;
+    min-height:100vh;
+    padding: 2rem 3rem;
+    height:auto;
+    width: 100%;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.adminFlex {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.adminHeaderText {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.adminHeaderSubText {
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: #565656;
+    padding: 0rem 0rem 0.5rem 0rem;
+}
+
+.adminStatContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.adminStatChild {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 32%;
+    height: 125px;
+
+    background: #F87575;
+    color: white;
+    border-radius: 15px;
+}
+
+.adminStatChildText {
+    font-weight: 500;
+    font-size: 1.1rem;
+    margin-left: 7%;
+}
+
+.adminStatChildStat {
+    font-weight: 600;
+    font-size: 2rem;
+    margin-left: 7%;
+}
+
+.adminSubHeader {
+    margin: 2rem 0rem;
+}
+
+.adminSubHeaderText {
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 34px;
+
+    color: #000000;
+}

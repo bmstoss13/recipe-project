@@ -4,6 +4,7 @@ import HomePage from './routes/HomePage';
 import GuestPage from './routes/GuestPage';
 import CreateRecipe from './routes/CreateRecipe'
 import EditRecipe from './routes/EditRecipe'
+import AdminDashboard from './routes/AdminDashboard'
 import RecipePage from './routes/RecipePage';
 
 import Navbar from './components/Navbar'; 
@@ -24,6 +25,7 @@ function App() {
               <Route path="/guest" element={<GuestPage />} /> {/** Placeholder*/}
               <Route path="/create-recipe" element={<CreateRecipe />} />
               <Route path="/edit-recipe/:id" element={<EditRecipe />} />
+              <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/recipes" element={<RecipePage />} />
               {/* <Route path="/recipes/:id" element={<RecipePage />} /> PLACE HOLDER FOR VIEWING SPECIFIC RECIPE*/}
               <Route path="/auth" element={<LoginSignup />} />
