@@ -4,6 +4,7 @@
     justify-content: center;
     background-color: var(--background-color);
     padding: 2rem 0;
+    overflow: hidden;
   }
   
   .recipe-detail {
