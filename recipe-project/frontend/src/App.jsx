@@ -7,7 +7,8 @@ import EditRecipe from './routes/EditRecipe'
 import RecipePage from './routes/RecipePage';
 
 import Navbar from './components/Navbar'; 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
 // import './App.css'; 
 
 import LoginSignup from './routes/LoginSignup';
@@ -29,6 +30,7 @@ function App() {
               <Route path="/recipeDetail" element={<RecipeDetail />} />
             </Routes>
       </Router>
+      <ToastContainer position="top-right" autoClose={3000} />
     </>
   );
 }

@@ -58,44 +58,47 @@ const RecipePage = () => {
     };
 
     return(
-        <div className="recipe-page">
-            <div className="recipe-header">
-                <h1>Recipes</h1>
-                <div className="toggle-and-search-container">
-                    <ToggleButtonGroup
-                        value={recipeType}
-                        exclusive
-                        onChange={handleToggleChange}
-                        aria-label="recipe type"
-                    >
-                        <ToggleButton value="edamam" aria-label="official recipes">
-                            Official
-                        </ToggleButton>
-                        <ToggleButton value="user-generated" aria-label="user recipes">
-                            User 
-                        </ToggleButton>
-                    </ToggleButtonGroup>
+        <div className="recipe-wrapper">
+            <Navbar/>
+            <div className="recipe-page">
+                <div className="recipe-header">
+                    <h1>Recipes</h1>
+                    <div className="toggle-and-search-container">
+                        <ToggleButtonGroup
+                            value={recipeType}
+                            exclusive
+                            onChange={handleToggleChange}
+                            aria-label="recipe type"
+                        >
+                            <ToggleButton value="edamam" aria-label="official recipes">
+                                Official
+                            </ToggleButton>
+                            <ToggleButton value="user-generated" aria-label="user recipes">
+                                User 
+                            </ToggleButton>
+                        </ToggleButtonGroup>
 
-                    <div className="header-search-container">
-                        <SearchBar onSearch={handleSearch} />
+                        <div className="header-search-container">
+                            <SearchBar onSearch={handleSearch} />
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            <div className="recipe-scroll-container">
-                <div className="recipe-grid">
-                    {recipes && Array.isArray(recipes) && recipes.length > 0 ? (
-                        recipes.map((recipe) => (
-                            <RecipeCard
-                                key={recipe.id || recipe.uri || recipe.recipe.uri}
-                                recipe={recipe}
-                                isOfficial={recipeType === 'edamam'}
-                            />
-                        ))
-                    ) : (
-                        !loading && <p>No recipes found.</p>
-                    )}
+                <div className="recipe-scroll-container">
+                    <div className="recipe-grid">
+                        {recipes && Array.isArray(recipes) && recipes.length > 0 ? (
+                            recipes.map((recipe) => (
+                                <RecipeCard
+                                    key={recipe.id || recipe.uri || recipe.recipe.uri}
+                                    recipe={recipe}
+                                    isOfficial={recipeType === 'edamam'}
+                                />
+                            ))
+                        ) : (
+                            !loading && <p>No recipes found.</p>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>
