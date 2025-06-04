@@ -4,12 +4,13 @@ import "../styles/RecipeCard.css"
 import { FaBookmark, FaRegBookmark } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CiImageOn } from "react-icons/ci";
 
 
 const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
-    const title = isOfficial ? recipe.recipe.label : recipe.title;
-    const imageUrl = isOfficial ? recipe.recipe.image : recipe.image;
-    const id = isOfficial ? encodeURIComponent(recipe.recipe.uri) : recipe.id;
+    const title = isOfficial ? recipe?.recipe?.label : recipe.title;
+    const imageUrl = isOfficial ? recipe?.recipe?.image : recipe.image;
+    const id = isOfficial ? encodeURIComponent(recipe?.recipe?.uri) : recipe.id;
 
     const [saved, setSaved] = useState(isSaved);
 
@@ -43,12 +44,18 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
     return (
         <div className="recipe-card">
             <Link to={`/recipes/${id}?type=${isOfficial ? 'edamam' : 'user'}`}>
-                <img src={imageUrl || 'vite.svg'} alt={title} />
+                <div className="recipe-image-container"> 
+                    {imageUrl ? (
+                        <img src={imageUrl} alt={title} className="recipe-image-content" />
+                    ) : (
+                        <CiImageOn className="recipe-image" /> 
+                    )}
+                </div>
             </Link>
 
             <div className="recipe-card-content">
                 <h3>{title}</h3>
-                <p>{isOfficial ? recipe.recipe.dishType : recipe.description || "User-submitted"}</p>
+                <p>{isOfficial ? recipe?.recipe?.dishType : recipe.description || "User-submitted"}</p>
             </div>
 
             <button 

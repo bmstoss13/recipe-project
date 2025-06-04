@@ -145,19 +145,25 @@ const RecipePage = () => {
                 <div className="recipe-header">
                     <h1>Recipes</h1>
                     <div className="toggle-and-search-container">
-                        <ToggleButtonGroup
-                            value={recipeType}
-                            exclusive
-                            onChange={handleToggleChange}
-                            aria-label="recipe type"
-                        >
-                            <ToggleButton value="edamam" aria-label="official recipes">
-                                Official
-                            </ToggleButton>
-                            <ToggleButton value="user-generated" aria-label="user recipes">
-                                User
-                            </ToggleButton>
-                        </ToggleButtonGroup>
+                        <div className="tab-button-container">
+                            <div className="search-tabRow">
+                                <div className="search-tabOuter">
+                                    <button 
+                                        className={`search-tabBtn${recipeType === "edamam" ? " active" : ""}`}
+                                        onClick={() => setRecipeType("edamam")}
+                                    >
+                                        Official
+                                    </button>
+                                    <button 
+                                        className={`search-tabBtn${recipeType === "user-generated" ? " active" : ""}`}
+                                        onClick={() => setRecipeType("user-generated")}
+                                    >
+                                        User
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div className="header-search-container">
                             <SearchBar onSearch={handleSearch} />
@@ -168,7 +174,9 @@ const RecipePage = () => {
                 <div className="recipe-scroll-container">
                     <div className="recipe-grid">
                         {recipes && Array.isArray(recipes) && recipes.length > 0 ? (
-                            recipes.map((recipe) => (
+                            recipes
+                                .filter(recipe => recipeType !== 'user-generated' || recipe.published==="published")
+                                .map((recipe) => (
                                 <RecipeCard
                                     key={recipe.id || recipe.uri || recipe.recipe.uri}
                                     recipe={recipe}
