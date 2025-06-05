@@ -16,16 +16,6 @@ const HomePage = () => {
           <div className="home-buttons">
             <Link to="/auth?mode=login">Login</Link>
             <Link to="/auth?mode=signup">Sign Up</Link>
-            <Link
-              to="/"
-              onClick={(e) => {
-                e.preventDefault();
-                localStorage.setItem('isGuest', 'true');
-                window.location.href = '/my-recipes'; 
-              }}
-            >
-              Continue as guest
-            </Link>
           </div>
         </div>
       </div>
