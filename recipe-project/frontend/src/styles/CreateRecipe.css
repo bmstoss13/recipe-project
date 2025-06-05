@@ -396,7 +396,6 @@ color: var(--salmon-accent-color);
     color: var(--salmon-accent-color);
 }
 
-/* Add hover effects with accent */
 .createRecipeBackButton:hover,
 .createRecipeAddIngredientButton:hover,
 .createRecipeDeleteIngredientButton:hover {
@@ -404,7 +403,6 @@ color: var(--salmon-accent-color);
     background-color: var(--salmon-accent-color);
 }
 
-/* Focused input/textarea */
 .createRecipeTitleInput:focus,
 .createRecipeDescriptionInput:focus,
 .createRecipeNumberInput:focus,
@@ -414,33 +412,27 @@ border-color: var(--salmon-accent-color);
 box-shadow: 0 0 0 3px rgba(248, 117, 117, 0.2);
 }
 
-/* Labels */
 .createRecipeFormLabel {
 color: var(--salmon-accent-color);
 }
 
-/* Section titles */
 .createRecipeFormMainText {
 color: var(--salmon-accent-color);
 }
 
-/* Error message */
 .createRecipeErrorMessage {
 color: #702d2d;
 }
 
-/* Buttons */
 .createRecipeBackButton,
 .createRecipeAddIngredientButton {
 background-color: #fff0f0;
 }
 
-/* Delete icon inside button (optional pink tint) */
 .createRecipeDeleteIngredientButton svg {
 fill: var(--salmon-accent-color);
 }
 
-/* Improve spacing consistency */
 .createRecipeFormSubText {
 padding-bottom: 1rem;
 }
