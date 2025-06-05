@@ -5,6 +5,7 @@ import '../styles/RecipeDetail.css';
 import ChatAssistant from '../components/ChatBot';
 import Comments from '../components/Comments';
 import Navbar from "../components/Navbar";
+import useCurrentUser from '../components/CurrentUser.jsx'
 import { toast } from 'react-toastify';
 
 
@@ -12,6 +13,13 @@ const RecipeDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
+  const [savedRecipes, setSavedRecipes] = useState([]);
+  const [isSaved, setIsSaved] = useState(false);
+  const { user, profile } = useCurrentUser();
+
+  useEffect(() => {
+    fetchSaved();
+  }, [user])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -25,6 +33,54 @@ const RecipeDetail = () => {
 
     if (id) fetchData();
   }, [id]);
+
+  const fetchSaved = async () => {
+    if (user) {
+      try {
+        const response = await axios.get(`http://localhost:5050/create/user/${user.uid}`);
+        const data = response.data;
+        setSavedRecipes(data.savedRecipes)
+
+        if (data.savedRecipes.includes(id)) {
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
+        }
+      } catch (e) {
+          console.error("Failed to fetch pending: ", e)
+      }
+    }
+  }
+
+  const addSaved = async () => {
+    const updatedSaved = [...savedRecipes, id]
+    const body = {
+      id: user.uid,
+      savedRecipes: updatedSaved
+    }
+    try {
+      const response = await axios.put(`http://localhost:5050/api/recipes/saveRecipe`, body)
+      fetchSaved();
+    } catch (e) {
+      console.error("Error updating saved recipes: ", e);
+    }
+  }
+
+  const removeSaved = async () => {
+    const updatedSaved = savedRecipes.filter(recipeId => recipeId !== id);
+    const body = {
+      id: user.uid,
+      savedRecipes: updatedSaved
+    }
+
+    try {
+      const response = await axios.put(`http://localhost:5050/api/recipes/saveRecipe`, body)
+      setSavedRecipes(updatedSaved);
+      fetchSaved();
+    } catch (e) {
+      console.error("Error updating saved recipes: ", e);
+    }
+  }
 
   if (!recipe) {
     return (
@@ -69,7 +125,16 @@ const RecipeDetail = () => {
                   navigator.clipboard.writeText(window.location.href);
                   toast.success("Link copied!");
                 }}>Share</button>
-                <button className="solid">Save Recipe</button>
+                
+                {isSaved ? (
+                  <button className="solid" onClick={() => removeSaved()}>
+                    Unsave Recipe
+                  </button>
+                ) : (
+                  <button className="solid" onClick={() => addSaved()}>
+                    Save Recipe
+                  </button>
+                )}
               </div>
             </div>
             {recipe.image && (

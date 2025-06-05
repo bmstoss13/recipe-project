@@ -167,4 +167,27 @@ router.get("/user/:id", async (req, res) => {
   }
 });
 
+router.put("/saveRecipe", async (req, res) => {
+  try {
+    const { id, savedRecipes } = req.body;
+
+    const updatedUserData = {
+      savedRecipes: savedRecipes,
+    };
+
+    const userRef = db.collection("users").doc(id);
+    await userRef.update(updatedUserData);
+
+    res.status(200).json({
+      userId: id,
+      updatedFields: updatedUserData,
+    });
+  } catch (e) {
+    console.error("Unable to update user: ", e);
+    res
+      .status(500)
+      .json({ message: "Unable to update user: ", error: e.message });
+  }
+});
+
 export default router;
