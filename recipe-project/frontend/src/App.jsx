@@ -11,6 +11,7 @@ import MyRecipesPage from './routes/MyRecipesPage';
 import Navbar from './components/Navbar'; 
 import { ToastContainer } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
+import { UserProvider } from './components/CurrentUser';
 // import './App.css'; 
 
 import LoginSignup from './routes/LoginSignup';
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <Router>
+        <UserProvider>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/guest" element={<GuestPage />} /> {/** Placeholder*/}
@@ -32,6 +34,7 @@ function App() {
               <Route path="/recipeDetail" element={<RecipeDetail />} />
               <Route path="/my-recipes" element={<MyRecipesPage />} />
             </Routes>
+          </UserProvider>
       </Router>
       <ToastContainer position="top-right" autoClose={3000} />
     </>
