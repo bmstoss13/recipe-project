@@ -59,15 +59,25 @@ router.get("/edamam", async (req, res) => {
 
 router.get("/user-generated", async (req, res) => {
   try {
-    const { query } = req.query;
+    const { q } = req.query;
+    console.log("query: " + q);
     let recipesRef = db.collection("userRecipes");
     let snapshot;
 
-    if (query) {
-      snapshot = await recipesRef
-        .where("title", ">=", query)
-        .where("title", "<=", query + "\uf8ff")
-        .get();
+    if (q) {
+      const lowerCase = q.toLowerCase();
+      console.log("title: " + lowerCase);
+    //   snapshot = await recipesRef
+    //     .where("titleLower", ">=", lowerCase)
+    //     .where("titleLower", "<=", lowerCase + "\uf8ff")
+    //     .get();
+    
+    const searchWords = lowerCase.split(' ').filter(word => word.length > 0);
+    if (searchWords.length > 0) {
+        snapshot = await recipesRef.where("searchKeywords", "array-contains", searchWords[0]).get();
+    } else {
+        snapshot = await recipesRef.get(); 
+    }
     } else {
       snapshot = await recipesRef.get();
     }

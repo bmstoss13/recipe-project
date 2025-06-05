@@ -27,6 +27,8 @@
 }
 
 .recipe-header {
+    font-weight: 700;
+    font-size: 2.5rem;
     background-color: transparent;
     position: sticky;
     top: 0;
@@ -42,9 +44,10 @@
     align-items: flex-start; 
     border-bottom: 1px solid #ccc;
     margin: 0 !important;
-    margin-left: 60px !important;
-    margin-right: 40px !important;
-    max-width: 1620px;
+    /* margin-left: 20px !important; */
+    padding-left: 4rem;
+
+    max-width: 2000px;
 
     /* margin-left: 300px;  */
 }
@@ -59,7 +62,7 @@
     justify-content: flex-start;
     margin-bottom: 1.5rem;
     padding-bottom: 0;
-    margin-top: 60px;
+    margin-top: 30px;
 
 }
 
@@ -87,7 +90,7 @@
   }
 
   .search-tabOuter {
-    background: #F7F7FF;
+    background: #fff;
     border-radius: 8px;
     padding: 0.4rem;
     display: flex;
@@ -96,7 +99,7 @@
   }
 
   .search-tabBtn {
-    background: #F7F7FF;
+    background: white;
     color: #1C0F13;
     border: none;
     outline: none;
@@ -128,7 +131,7 @@
   }
 
 .MuiToggleButtonGroup-root {
-    background-color: #F7F7FF; 
+    background-color: white; 
     border: 1px solid #F87575; 
     border-radius: 10px !important; 
     overflow: hidden; 
@@ -193,7 +196,7 @@
     /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
     gap: 20px;
     width: 100%;
-    max-width: 1620px;
+    max-width: 1700px;
 
     /* padding: 10px 0; */
     /* justify-items: center; */
