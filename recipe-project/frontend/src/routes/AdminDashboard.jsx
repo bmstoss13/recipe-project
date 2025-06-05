@@ -192,7 +192,7 @@ function AdminDashboard() {
                                     <Link to={`/recipeDetail/${p.id}`}>
                                         <button className="adminRecipeChildView" type="button">View Details</button>
                                     </Link>
-                                    <button className="adminRecipeChildReject" type="button" onClick={() => handleReject(p.id)}>Reject</button>
+                                    <button className="adminRecipeChildReject" type="button" onClick={() => handleReject(p.id)}>Retract</button>
                                 </div>
                             </div>
                         ))
