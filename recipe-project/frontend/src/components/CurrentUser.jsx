@@ -1,9 +1,16 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+} from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 
-export function useCurrentUser() {
+const UserContext = createContext();
+
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [profile, setProfile] = useState(null);
 
@@ -35,7 +42,16 @@ export function useCurrentUser() {
     return () => unsubscribe();
   }, []);
 
-  return { user, profile };
+  return (
+    <UserContext.Provider value={{ user, profile }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export function useCurrentUser() {
+  return useContext(UserContext);
 }
 
-export default useCurrentUser
+
+export default useCurrentUser;
