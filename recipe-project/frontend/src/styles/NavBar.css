@@ -115,7 +115,6 @@ hr {
 
 .nav-links a:hover {
   background-color: var(--salmon-accent-color);
-  color: var(--background-color);
 }
 
 .toggle-btn:hover, .logout-btn a:hover {

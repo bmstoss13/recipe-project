@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
-import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaBars } from 'react-icons/fa';
+import { FaUserCircle, FaSearch, FaBookOpen, FaPlus, FaBars, FaSignOutAlt } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import { useCurrentUser } from './CurrentUser';
 import { doc, updateDoc } from 'firebase/firestore';
@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { Link } from 'react-router-dom';
+
 
 
 const Navbar = () => {
@@ -107,7 +108,8 @@ const Navbar = () => {
 
         <div className="logout-btn">
           <a href="#" onClick={handleAuthClick}>
-            {open && (isGuest ? 'Sign In' : 'Logout')}
+            {isGuest ? <FaSignInAlt /> : <FaSignOutAlt />}
+            {open && (isGuest ? ' Sign In' : ' Logout')}
           </a>
         </div>
       </div>
