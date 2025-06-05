@@ -6,6 +6,8 @@ import { useCurrentUser } from './CurrentUser';
 import { doc, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase';
 import { toast } from 'react-toastify';
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
 
 const Navbar = () => {
   const { user, profile } = useCurrentUser();
@@ -20,9 +22,17 @@ const Navbar = () => {
     setIsGuest(guest);
   }, []);
 
-  const handleAuthClick = () => {
-    localStorage.removeItem('isGuest');
-    window.location.href = isGuest ? '/auth' : '/';
+  const handleAuthClick = async () => {
+    try {
+      if (!isGuest) {
+        await signOut(auth);
+      }
+  
+      localStorage.removeItem("isGuest");
+      window.location.href = isGuest ? "/auth" : "/";
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
   };
 
   const handleProfilePicSubmit = async (e) => {

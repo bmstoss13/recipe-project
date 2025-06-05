@@ -6,6 +6,8 @@ import recipeRoute from "./routes/recipeRoute.js";
 import create from "./routes/create.js";
 import authRoute from "./routes/authRoute.js";
 import myRecipesRoute from './routes/myRecipesRoute.js';
+import commentsRouter from "./routes/comments.js";
+
 
 import OpenAI from "openai"
 
@@ -30,7 +32,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/create", create);
 app.use('/api/my-recipes', myRecipesRoute);
-
+app.use("/api/comments", commentsRouter);
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,

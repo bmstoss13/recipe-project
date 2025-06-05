@@ -34,7 +34,7 @@ const LoginSignup = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
   
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
+        const response = await fetch('http://localhost:5050/api/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -56,7 +56,7 @@ const LoginSignup = () => {
         return; 
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/home'); {/*REPLACE WITH THE DASHBOARD*/}
+        navigate('/recipes');
       }
     } catch (err) {
       console.error(err);

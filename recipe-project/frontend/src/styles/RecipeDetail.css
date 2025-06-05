@@ -274,3 +274,59 @@
   .chat-button:hover {
     background-color: #ef6b6b;
   }
+
+  .comments-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .sort-btn {
+    margin-bottom: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    border: 1px solid var(--salmon-accent-color);
+    background: none;
+    cursor: pointer;
+    font-weight: 500;
+    color: var(--salmon-accent-color)
+  }
+
+  .sort-btn:hover {
+    background: var(--salmon-accent-color);
+    color: white;
+  }
+
+  .post-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /*UPVOTE*/
+  .comment-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .upvote-btn {
+    background: none;
+    border: none;
+    color: var(--salmon-accent-color);
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .upvote-btn:hover {
+    background: var(--salmon-accent-color);
+    border-radius: 20;
+  }
+  
+  .upvote-count {
+    font-weight: 500;
+  }
+  
