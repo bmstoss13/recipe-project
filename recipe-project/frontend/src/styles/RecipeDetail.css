@@ -6,7 +6,6 @@
 }
 
 .recipe-detail-container {
-  display: flex;
   align-items: flex-start;
   justify-content: center;
   background-color: var(--background-color);
@@ -14,12 +13,12 @@
   padding: 2rem 2rem 5rem 2rem;
   height: 100vh;
   overflow-y: auto;
-  width: 75%;         
-  margin: 0 auto;          
+  margin: 0 auto;
+  flex: 1; 
 }
 
   .recipe-detail {
-    width: 85%;
+    width: 100%;
     background-color: var(--background-color);
   }
 
