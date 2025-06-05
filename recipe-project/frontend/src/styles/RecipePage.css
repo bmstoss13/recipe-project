@@ -52,13 +52,15 @@
 
 
 .recipe-header h1{
-    font-size: 4rem;
+    font-weight: 700;
+    font-size: 2.5rem;
     width: 100%; 
     display: flex; 
     justify-content: flex-start;
-    margin-bottom: 0;
+    margin-bottom: 1.5rem;
     padding-bottom: 0;
-    margin-top: 30px;
+    margin-top: 60px;
+
 }
 
 .toggle-and-search-container {
@@ -75,6 +77,55 @@
 
 
 }
+
+  .search-tabRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-bottom: 2rem; */
+    width: 100%;
+  }
+
+  .search-tabOuter {
+    background: #F7F7FF;
+    border-radius: 8px;
+    padding: 0.4rem;
+    display: flex;
+    border: 2px solid #F87575;
+    width: fit-content;
+  }
+
+  .search-tabBtn {
+    background: #F7F7FF;
+    color: #1C0F13;
+    border: none;
+    outline: none;
+    font-weight: 550;
+    font-size: 1rem;
+    padding: 0.4rem 1.2rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    border-radius: 0;
+    margin: 0;
+  }
+  
+  .search-tabBtn.active {
+    background: #F87575;
+    color: #F7F7FF;
+    cursor: default;
+  }
+  
+  .search-tabBtn:first-child {
+    border-radius: 8px;
+  }
+  
+  .search-tabBtn:last-child {
+    border-radius: 8px;
+  }
+  
+  .search-tabBtn:disabled {
+    cursor: default;
+  }
 
 .MuiToggleButtonGroup-root {
     background-color: #F7F7FF; 

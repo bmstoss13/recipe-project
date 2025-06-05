@@ -350,7 +350,7 @@
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out; 
 }
 
-.createRecipeSubmit:hover {
+.createRecipeBackButton:hover {
     /* background-color: #e7e7e7; */
     border-color: #F87575;
     box-shadow: 0 0 0 3px rgba(248, 117, 117, 0.1);

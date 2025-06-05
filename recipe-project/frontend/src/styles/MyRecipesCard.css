@@ -1,6 +1,6 @@
 .my-recipes-card {
   width: 280px;
-  min-height: 190px;
+  height: 100%;
   margin: 14px;
   border-radius: 20px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
@@ -41,6 +41,7 @@
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   flex: 1;
+  justify-content: space-between;
 }
 
 .my-recipes-title {
@@ -50,11 +51,27 @@
   margin-bottom: 8px;
 }
 
+.my-recipes-description-container {
+  max-width: 90%;
+  margin-bottom: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre-line;
+  word-break: break-word;
+}
+
 .my-recipes-description {
   font-size: 1rem;
   color: #666;
   min-height: 32px;
   margin-bottom: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 0;
 }
 
 .my-recipes-actions {
@@ -66,6 +83,7 @@
   box-sizing: border-box;
   overflow: visible;
   padding-right: 2rem;
+  margin-top: auto;
 }
 
 .my-recipes-icon-btn {

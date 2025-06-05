@@ -22,10 +22,24 @@ router.get('/created', authenticate, async (req, res) => {
   }
 });
 
-// Get all recipes saved by the user
+// Get saved recipes for the current user
 router.get('/saved', authenticate, async (req, res) => {
   try {
-    const recipes = await getSavedRecipes(req.user.uid);
+    const userDoc = await db.collection('users').doc(req.user.uid).get();
+    const savedRecipeIds = userDoc.data()?.savedRecipes || [];
+    const recipesRef = db.collection('userRecipes');
+    const recipes = [];
+    const batchSize = 10;
+    for (let i = 0; i < savedRecipeIds.length; i += batchSize) {
+      const batchIds = savedRecipeIds.slice(i, i + batchSize);
+      const batch = await Promise.all(
+        batchIds.map(async (id) => {
+          const doc = await recipesRef.doc(id).get();
+          return doc.exists ? { id: doc.id, ...doc.data() } : null;
+        })
+      );
+      recipes.push(...batch.filter(Boolean));
+    }
     res.json(recipes);
   } 
   catch (err) {

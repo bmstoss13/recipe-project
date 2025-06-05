@@ -70,34 +70,84 @@
     cursor: pointer;
     margin-left: 0;
     transition: background 0.2s, box-shadow 0.3s cubic-bezier(0.4,0.2,0.2,1), transform 0.3s cubic-bezier(0.4,0.2,0.2,1);
+    flex-shrink: 0;
+    white-space: nowrap;
   }
   .createBtn:hover {
     box-shadow: 0 12px 32px 0 rgba(0,0,0,0.22), 0 2px 8px 0 rgba(0,0,0,0.18);
     transform: translateY(-8px) scale(1.04);
+  }
+  /* reduce button size on small screens */
+  @media (max-width: 600px) {
+    .createBtn {
+      font-size: 0.95rem;
+      padding: 0.5rem 0.5rem;
+      max-width: 130px;
+    }
+    .tabRow {
+      gap: 0.5rem;
+    }
   }
   
   .grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    justify-items: start;
+    justify-items: center;
     margin-left: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
+  /* When sidebar is open, use 3 columns */
+.sidebar.open ~ .my-recipes-main-content .grid {
+  grid-template-columns: repeat(3, 1fr);
+}
 
+/* when sidebar is open, 2 columns for medium screens */
+@media (max-width: 1100px) {
+  .grid,
+  .sidebar.open ~ .my-recipes-main-content .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* When sidebar is open, 1 column for small/mobile screens */
+@media (max-width: 700px) {
+  .grid,
+  .sidebar.open ~ .my-recipes-main-content .grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* When sidebar is closed, 3 columns */
   @media (max-width: 1200px) {
     .grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
+/* When sidebar is closed, 2 columns for medium screen */
   @media (max-width: 900px) {
     .grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
-
+/* When sidebar is closed, 1 column for small/mobile screens */
   @media (max-width: 600px) {
     .grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .recipe-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    overflow-x: auto;
+  }
+  
+  .my-recipes-main-content {
+    flex: 1;
+    padding: 0 2rem;
+    min-width: 0;
+    overflow-y: auto;
   }
