@@ -5,6 +5,7 @@ import ChatAssistant from '../components/ChatBot';
 import { useNavigate } from 'react-router-dom';
 import Comments from '../components/Comments';
 import Navbar from "../components/Navbar";
+import { toast } from 'react-toastify';
 
 const RecipeDetail = () => {
   const navigate = useNavigate();
@@ -35,7 +36,20 @@ const RecipeDetail = () => {
             <h1>{recipe.title}</h1>
             <p>{recipe.description}</p>
             <div className="recipe-buttons">
-                <button className="outline">Share</button>
+            <button
+              className="outline"
+              onClick={() => {
+                navigator.clipboard.writeText(window.location.href)
+                  .then(() => {
+                    toast.success("Link copied to clipboard!");
+                  })
+                  .catch((err) => {
+                    console.error("Failed to copy: ", err);
+                  });
+              }}
+            >
+              Share
+            </button>
                 <button className="solid">Save Recipe</button>
             </div>
             </div>
