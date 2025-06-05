@@ -9,6 +9,7 @@ import {
 import admin from 'firebase-admin';
 import { db } from '../firebase.js';
 import authenticate from '../authenticate.js';
+import axios from 'axios';
 
 const router = express.Router();
 
@@ -27,19 +28,38 @@ router.get('/saved', authenticate, async (req, res) => {
   try {
     const userDoc = await db.collection('users').doc(req.user.uid).get();
     const savedRecipeIds = userDoc.data()?.savedRecipes || [];
-    const recipesRef = db.collection('userRecipes');
+    
+    // Separate Edamam URIs from user-generated recipe IDs
+    const edamamUris = savedRecipeIds.filter(id => id.includes('edamam.owl'));
+    const userRecipeIds = savedRecipeIds.filter(id => !id.includes('edamam.owl'));
+    
     const recipes = [];
-    const batchSize = 10;
-    for (let i = 0; i < savedRecipeIds.length; i += batchSize) {
-      const batchIds = savedRecipeIds.slice(i, i + batchSize);
-      const batch = await Promise.all(
-        batchIds.map(async (id) => {
-          const doc = await recipesRef.doc(id).get();
-          return doc.exists ? { id: doc.id, ...doc.data() } : null;
-        })
-      );
-      recipes.push(...batch.filter(Boolean));
+
+    // Fetch user-generated recipes
+    if (userRecipeIds.length > 0) {
+      const recipesRef = db.collection('userRecipes');
+      const batchSize = 10;
+      for (let i = 0; i < userRecipeIds.length; i += batchSize) {
+        const batchIds = userRecipeIds.slice(i, i + batchSize);
+        const batch = await Promise.all(
+          batchIds.map(async (id) => {
+            const doc = await recipesRef.doc(id).get();
+            return doc.exists ? { id: doc.id, ...doc.data() } : null;
+          })
+        );
+        recipes.push(...batch.filter(Boolean));
+      }
     }
+
+    // Add Edamam recipes
+    for (const uri of edamamUris) {
+      recipes.push({
+        id: uri,
+        type: 'edamam',
+        uri: uri
+      });
+    }
+
     res.json(recipes);
   } 
   catch (err) {
