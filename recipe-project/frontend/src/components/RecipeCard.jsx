@@ -41,9 +41,12 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
             onSaveRecipe(entry); 
         }
     };
+
+    const detailPagePath = isOfficial ? `/edamam-recipeDetail/${id}` : `/recipeDetail/${id}`;
+
     return (
         <div className="recipe-card">
-            <Link to={`/recipesDetail/${id}?type=${isOfficial ? 'edamam' : 'user'}`}>
+            <Link to={detailPagePath}>
                 <div className="recipe-image-container"> 
                     {imageUrl ? (
                         <img src={imageUrl} alt={title} className="recipe-image-content" />
