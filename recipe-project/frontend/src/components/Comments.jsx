@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { useCurrentUser } from "../components/CurrentUser";
 
-const Comments = () => {
+const Comments = ({recipeId}) => {
   const { user } = useCurrentUser();
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState('');
@@ -25,11 +25,13 @@ const Comments = () => {
       try {
         const snapshot = await getDocs(collection(db, "comments"));
         const fetchedComments = [];
-
+  
         for (const docSnap of snapshot.docs) {
           const data = docSnap.data();
           data.id = docSnap.id;
-
+  
+          if (data.recipeId !== recipeId) continue;
+  
           if (!data.userName && data.userId) {
             try {
               const userDoc = await getDoc(doc(db, "users", data.userId));
@@ -40,18 +42,19 @@ const Comments = () => {
           } else {
             data.userName = data.userName || "Anonymous";
           }
-
+  
           fetchedComments.push(data);
         }
-
+  
         setComments(fetchedComments);
       } catch (err) {
         console.error("Error fetching comments:", err);
       }
     };
-
-    fetchComments();
-  }, []);
+  
+    if (recipeId) fetchComments();
+  }, [recipeId]);
+  
 
   const handlePost = async () => {
     if (!user?.uid) {
@@ -87,6 +90,7 @@ const Comments = () => {
       rating,
       upvotes: 0,
       createdAt: serverTimestamp(),
+      recipeId,
     };
 
     try {
