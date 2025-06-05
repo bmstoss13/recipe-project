@@ -22,6 +22,7 @@ function AdminDashboard() {
             try {
                 const response = await axios.get(`http://localhost:5050/create/user/${user.uid}`);
                 const data = response.data;
+                console.log(user);
                 if (!data.isAdmin) {
                     navigate(`/my-recipes`)
                 }
@@ -29,13 +30,14 @@ function AdminDashboard() {
                 console.error("Failed to fetch pending: ", e)
             }
         }
-        if (user && !user.isGuest) {
+        if (user) {
+            if (user.isGuest) {
+                navigate(`/my-recipes`)
+            }
             checkUser();
             fetchPending();
             fetchPublished();
             fetchRejected();
-        } else {
-            navigate('/my-recipes')
         }
     }, [user, navigate])
 
