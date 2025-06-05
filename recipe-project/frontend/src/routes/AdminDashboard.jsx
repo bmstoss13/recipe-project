@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import Navbar from '../components/Navbar';
+import useCurrentUser from '../components/CurrentUser.jsx'
 
 import { IoIosTimer } from "react-icons/io";
 import { IoPersonSharp } from "react-icons/io5";
@@ -13,11 +14,30 @@ function AdminDashboard() {
     const [published, setPublished] = useState([])
     const [rejected, setRejected] = useState([])
 
+    const { user, profile } = useCurrentUser();
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetchPending();
-        fetchPublished();
-        fetchRejected();
-    }, [])
+        const checkUser = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5050/create/user/${user.uid}`);
+                const data = response.data;
+                if (!data.isAdmin) {
+                    navigate(`/my-recipes`)
+                }
+            } catch (e) {
+                console.error("Failed to fetch pending: ", e)
+            }
+        }
+        if (user && !user.isGuest) {
+            checkUser();
+            fetchPending();
+            fetchPublished();
+            fetchRejected();
+        } else {
+            navigate('/my-recipes')
+        }
+    }, [user, navigate])
 
     const handlePublish = async (id) => {
         try {

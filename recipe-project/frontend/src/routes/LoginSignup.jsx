@@ -34,7 +34,7 @@ const LoginSignup = () => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
   
-        const response = await fetch('http://localhost:5000/api/auth/signup', {
+        const response = await fetch('http://localhost:5050/api/auth/signup', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
