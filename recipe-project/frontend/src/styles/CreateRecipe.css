@@ -325,3 +325,45 @@
     
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out; 
 }
+
+.createRecipeBackButton {
+    box-sizing: border-box;
+    
+    margin: 1rem 0rem;
+    padding: 0.75rem 1rem;
+    border: 3px solid #d1d5db; 
+    border-radius: 0.5rem; 
+    background-color: #f9fafb; 
+    box-shadow: 0px 0px 4px rgba(86, 86, 86, 0.1);
+
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Funnel Sans', sans-serif;
+    color: #000000;
+    
+    cursor: pointer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out; 
+}
+
+.createRecipeBackButton:hover {
+    /* background-color: #e7e7e7; */
+    border-color: #F87575;
+    box-shadow: 0 0 0 3px rgba(248, 117, 117, 0.1);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}

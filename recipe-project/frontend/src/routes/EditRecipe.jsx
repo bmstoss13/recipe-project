@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import useCurrentUser from '../components/CurrentUser.jsx'
 
@@ -113,7 +113,7 @@ function CreateRecipe() {
       const response = await axios.put('http://localhost:5050/create/edit', data);
 
       if (response.status === 200) {
-        navigate(`/recipe/${response.data.recipeId}`)
+        navigate(`/recipeDetail/${response.data.recipeId}`)
       } else {
         console.error("Failed to submit recipe.");
       }
@@ -127,6 +127,9 @@ function CreateRecipe() {
       <Navbar/>
       <div className="createRecipeMain">
         <div className="createRecipeContainer">
+          <Link to="/my-recipes">
+            <button className="createRecipeBackButton" type="button">Back</button>
+          </Link>
           <div className="createRecipeHeaderContainer">
             <div className="createRecipeMainText">Edit Recipe</div>
             <div className="createRecipeSubText">Share your favorite recipe with our community</div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import useCurrentUser from '../components/CurrentUser.jsx'
 
@@ -18,10 +18,25 @@ function CreateRecipe() {
   const [ingredients, setIngredients] = useState(['']);
   const [instructions, setInstructions] = useState(['']);
   const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
   const { user, profile } = useCurrentUser();
+
+  useEffect(() => {
+        const fetchPending = async () => {
+            try {
+                const response = await axios.get(`http://localhost:5050/create/user/${user.uid}`);
+                const data = response.data;
+                setUsername(data.username);
+            } catch (e) {
+                console.error("Failed to fetch pending: ", e)
+            }
+        }
+
+        fetchPending();
+    }, [user])
 
   const handleIngredientChange = (idx, e) => {
     const newIngredients = [...ingredients];
@@ -79,6 +94,7 @@ function CreateRecipe() {
 
     const data = {
       "user_id": user.uid,
+      "username": username,
       "title": name,
       "description": description,
       "prep_time": prepTime,
@@ -91,7 +107,7 @@ function CreateRecipe() {
     try {
       const response = await axios.post('http://localhost:5050/create/recipe', data);
       if (response.status === 200) {
-        navigate(`/recipe/${response.data.recipeId}`)
+        navigate(`/recipeDetail/${response.data.recipeId}`)
       } else {
         console.error("Failed to submit recipe.");
       }
@@ -105,6 +121,9 @@ function CreateRecipe() {
       <Navbar/>
       <div className="createRecipeMain">
         <div className="createRecipeContainer">
+          <Link to="/my-recipes">
+            <button className="createRecipeBackButton" type="button">Back</button>
+          </Link>
           <div className="createRecipeHeaderContainer">
             <div className="createRecipeMainText">Submit a Recipe</div>
             <div className="createRecipeSubText">Share your favorite recipe with our community</div>

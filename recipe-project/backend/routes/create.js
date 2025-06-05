@@ -7,6 +7,7 @@ router.post("/recipe", async (req, res) => {
   try {
     const {
       user_id,
+      username,
       title,
       description,
       prep_time,
@@ -18,7 +19,9 @@ router.post("/recipe", async (req, res) => {
 
     const newRecipe = {
       user_id: user_id,
+      username: username,
       title: title,
+      titleLower: title.toLowerCase(),
       description: description,
       prep_time: prep_time,
       cook_time: cook_time,
@@ -45,7 +48,6 @@ router.put("/edit", async (req, res) => {
   try {
     const {
       recipe_id,
-      user_id,
       title,
       description,
       prep_time,
@@ -57,6 +59,7 @@ router.put("/edit", async (req, res) => {
 
     const updatedRecipeData = {
       title: title,
+      titleLower: title.toLowerCase(),
       description: description,
       prep_time: prep_time,
       cook_time: cook_time,
@@ -100,6 +103,29 @@ router.get("/get/:id", async (req, res) => {
     res
       .status(500)
       .json({ message: "Unable to retrieve recipe: ", error: e.message });
+  }
+});
+
+router.get("/user/:id", async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const userRef = db.collection("users").doc(userId);
+    const userSnap = await userRef.get();
+
+    if (userSnap.exists) {
+      res.status(200).json({
+        id: userSnap.id,
+        ...userSnap.data(),
+      });
+    } else {
+      res.status(404).json({ message: "User not found." });
+    }
+  } catch (e) {
+    console.error("Unable to retrieve user: ", e);
+    res
+      .status(500)
+      .json({ message: "Unable to retrieve user: ", error: e.message });
   }
 });
 
