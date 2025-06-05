@@ -8,6 +8,8 @@ import { db } from '../firebase';
 import { toast } from 'react-toastify';
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { Link } from 'react-router-dom';
+
 
 const Navbar = () => {
   const { user, profile } = useCurrentUser();
@@ -94,13 +96,13 @@ const Navbar = () => {
           <hr />
 
           <nav className="nav-links">
-            <a href="/recipes"><FaSearch /> {open && 'Browse Recipes'}</a>
-            <a href="/my-recipes"><FaBookOpen /> {open && 'My Recipes'}</a>
-            <a href="/create-recipe"><FaPlus /> {open && 'Add Recipe'}</a>
+            <Link to="/recipes"><FaSearch /> {open && 'Browse Recipes'}</Link>
+            <Link to="/my-recipes"><FaBookOpen /> {open && 'My Recipes'}</Link>
+            <Link to="/create-recipe"><FaPlus /> {open && 'Add Recipe'}</Link>
             {profile?.isAdmin && (
-              <a href="/admin"><MdDashboard /> {open && 'Admin Dashboard'}</a>
+              <Link to="/admin"><MdDashboard /> {open && 'Admin Dashboard'}</Link>
             )}
-            <a href="/recipeDetail">{open && 'TEMP - recipe detail'}</a>
+            <Link to="/recipeDetail">{open && 'TEMP - recipe detail'}</Link>
           </nav>
         </div>
 
