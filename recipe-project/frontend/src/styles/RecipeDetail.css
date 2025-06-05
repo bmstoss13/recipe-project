@@ -3,6 +3,7 @@
   flex-direction: row;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--background-color);
 }
 
 .recipe-detail-container {
@@ -15,6 +16,7 @@
   overflow-y: auto;
   margin: 0 auto;
   flex: 1; 
+  margin-left: 3rem;
 }
 
   .recipe-detail {
