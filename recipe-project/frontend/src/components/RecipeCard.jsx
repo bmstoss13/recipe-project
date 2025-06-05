@@ -43,7 +43,7 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
     };
     return (
         <div className="recipe-card">
-            <Link to={`/recipes/${id}?type=${isOfficial ? 'edamam' : 'user'}`}>
+            <Link to={`/recipesDetail/${id}?type=${isOfficial ? 'edamam' : 'user'}`}>
                 <div className="recipe-image-container"> 
                     {imageUrl ? (
                         <img src={imageUrl} alt={title} className="recipe-image-content" />

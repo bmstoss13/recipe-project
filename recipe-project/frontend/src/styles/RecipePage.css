@@ -65,7 +65,7 @@
 
 .toggle-and-search-container {
     display: flex;
-    flex-direction: row; 
+    /* flex-direction: row;  */
     flex-wrap: wrap !important; 
     justify-content: flex-start; 
     width: 100%; 
