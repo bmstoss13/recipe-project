@@ -6,17 +6,18 @@
 }
 
 .recipe-detail-container {
-    width: 100%;
-    display: flex;
-    align-items: flex-start;
-    justify-content: center;
-    background-color: var(--background-color);
-    box-sizing: border-box;
-    padding: 2rem 0 5rem 0;
-    height: 100vh;
-    overflow-y: auto;
-  }
-  
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  background-color: var(--background-color);
+  box-sizing: border-box;
+  padding: 2rem 2rem 5rem 2rem;
+  height: 100vh;
+  overflow-y: auto;
+  width: 75%;         
+  margin: 0 auto;          
+}
+
   .recipe-detail {
     width: 85%;
     background-color: var(--background-color);
