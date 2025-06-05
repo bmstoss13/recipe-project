@@ -1,85 +1,122 @@
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom'
-import '../styles/UserRecipeDetail.css';
+import '../styles/RecipeDetail.css';
 import ChatAssistant from '../components/ChatBot';
 import Comments from '../components/Comments';
 import Navbar from "../components/Navbar";
+import { toast } from 'react-toastify';
 
-import { IoIosTimer } from "react-icons/io";
-import { IoPersonSharp } from "react-icons/io5";
 
 const RecipeDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`http://localhost:5050/create/get/${id}`);
-      const data = response.data;
-      console.log(data);
-      setRecipe(data);
-    }
+      try {
+        const response = await axios.get(`http://localhost:5050/create/get/${id}`);
+        setRecipe(response.data);
+      } catch (error) {
+        console.error("Error fetching recipe:", error);
+      }
+    };
 
-    if (id) {
-      fetchData();
-    }
-  }, [id])
-  if (recipe) {
+    if (id) fetchData();
+  }, [id]);
+
+  if (!recipe) {
     return (
-      <div className="userRecipeContainer">
-        <Navbar/>
-        <div className="userRecipeMain">
-          <div className="userRecipeHeaderContainer">
-            <div className="userRecipeHeaderText">{recipe.title}</div>
-            <div className="userRecipeUser">By {recipe.username}</div>
-          </div>
-          <div className="userRecipeIngredientsHeader">Description</div>
-          <div className="userRecipeHeaderSubText">{recipe.description}</div>
-          <div className="userRecipeNumbersContainer">
-            <div className="userRecipeNumbersChild">
-              <IoIosTimer className="userRecipeNumbersIcon" size={22}/>
-              <div className="userRecipeNumbersText">{parseInt(recipe.prep_time) + parseInt(recipe.cook_time)} mins</div>
-            </div>
-            <div className="userRecipeNumbersChild">
-              <IoPersonSharp className="userRecipeNumbersIcon" size={22}/>
-              <div className="userRecipeNumbersText">{parseInt(recipe.servings)} servings</div>
-            </div>
-          </div> 
-          <div className="userRecipeIngredientsContainer">
-            <div className="userRecipeIngredientsHeader">Ingredients</div>
-            {recipe.ingredients.map((ingredient, idx) => (
-              <div key={idx} className="userRecipeIngredientsChild">
-                • {ingredient}
+      <div className="myrecipe-page-container">
+        <Navbar />
+        <div className="recipe-detail-container">Loading...</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className='myrecipe-page-container'>
+      <Navbar />
+      <div className="recipe-detail-container">
+        <span className="recipeback-text" onClick={() => navigate(-1)}>
+          ← Back
+        </span>
+        <div className="recipe-detail">
+          <div className="recipeDetail-header">
+            <div className="recipe-text">
+              <h1>{recipe.title}</h1>
+              <p className="recipe-author">
+                By <span className="recipe-author-name" style={{ color: '#f38181' }}>{recipe.username}</span>
+              </p>
+              <p>{recipe.description}</p>
+              <div className="recipe-numbers-container">
+                <div className="recipe-numbers-child">
+                  <span role="img" aria-label="timer">⏱️</span>
+                  <span className="recipe-numbers-text">
+                    {parseInt(recipe.prep_time) + parseInt(recipe.cook_time)} mins
+                  </span>
+                </div>
+                <div className="recipe-numbers-child">
+                  <span role="img" aria-label="servings">👤</span>
+                  <span className="recipe-numbers-text">
+                    {parseInt(recipe.servings)} servings
+                  </span>
+                </div>
               </div>
-            ))}
-          </div>
-          <div className="userRecipeInstructionsContainer">
-            <div className="userRecipeIngredientsHeader">Instructions</div>
-            {recipe.instructions.map((instruction, idx) => (
-              <div key={idx} className="userRecipeIngredientsChild">
-                {idx + 1}. {instruction}
+              <div className="recipe-buttons">
+                <button className="outline" onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  toast.success("Link copied!");
+                }}>Share</button>
+                <button className="solid">Save Recipe</button>
               </div>
-            ))}
+            </div>
+            {recipe.image && (
+              <div className="recipe-image">
+                <img src={recipe.image} alt="Recipe" className="recipe-image-bordered" />
+              </div>
+            )}
           </div>
+          
+          <section className="ingredients">
+            <h2>Ingredients</h2>
+            <div className="ingredients-card">
+              <ul>
+                {recipe.ingredients?.map((ingredient, idx) => (
+                  <li key={idx} className="ingredient-item">{ingredient}</li>
+                ))}
+              </ul>
+            </div>
+          </section>
+
+          <section className="instructions">
+            <h2>Instructions</h2>
+            <ul>
+              {recipe.instructions?.map((step, index) => (
+                <li key={index}>
+                  <div className="step-box">
+                    <div className="step-text">
+                      <strong>Step {index + 1}</strong>
+                      <p>{step}</p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <h2 className="serveInst">Serve and Enjoy!</h2>
+          </section>
+
           <Comments recipeId={id} />
-          <div className="adminSpacing"></div>
         </div>
-        <div className="chat-button" onClick={() => alert("AI Assistant coming soon!")}>
+
+        <div className="chat-button">
           💬 Need help?
         </div>
         <ChatAssistant />
       </div>
-    );
-  } else {
-    return (
-      <div className="userRecipeContainer">
-        <Navbar/>
-        <div className="userRecipeMain">
-        </div>
-      </div>
-    )
-  }
+    </div>
+  );
 };
 
 export default RecipeDetail;

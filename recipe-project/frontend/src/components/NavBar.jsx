@@ -102,7 +102,6 @@ const Navbar = () => {
             {profile?.isAdmin && (
               <Link to="/admin"><MdDashboard /> {open && 'Admin Dashboard'}</Link>
             )}
-            <Link to="/recipeDetail">{open && 'TEMP - recipe detail'}</Link>
           </nav>
         </div>
 
