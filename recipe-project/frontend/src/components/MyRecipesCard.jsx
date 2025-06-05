@@ -8,7 +8,7 @@ import "../styles/MyRecipesCard.css";
 import { Tooltip } from 'react-tooltip';
 import { useNavigate } from "react-router-dom";
 
-export default function RecipeCard({
+export default function MyRecipesCard({
   recipe,
   tab,
   onView,
@@ -19,11 +19,9 @@ export default function RecipeCard({
   isSaved,
 }) {
   const navigate = useNavigate();
-
-  // Prevent card click when clicking on action buttons
-  const stopPropagation = (e) => {
-    e.stopPropagation();
-  };
+  //Prevent card click when clicking on action buttons
+  const stopPropagation = (e) => { e.stopPropagation(); };
+  const hasImage = !!recipe.image;
 
   return (
     <div
@@ -31,11 +29,19 @@ export default function RecipeCard({
       onClick={() => navigate(`/recipeDetail/${recipe.id}`)}
       style={{ cursor: "pointer" }}
     >
-      <div className="my-recipes-image-container">
-        <span className="my-recipes-image" role="img" aria-label="recipe"><CiImageOn /></span>
-      </div>
+      {hasImage ? (
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="my-recipes-image recipe-card-img"
+        />
+      ) : (
+        <div className="my-recipes-image-container recipe-card-img">
+          <span className="my-recipes-image" role="img" aria-label="recipe"><CiImageOn /></span>
+        </div>
+      )}
       <div className="my-recipes-content-container">
-        <div className="my-recipes-title">{recipe.title}</div>
+        <div className="my-recipes-title"><b>{recipe.title}</b></div>
         <div className="my-recipes-description-container">
           <div className="my-recipes-description">{recipe.description}</div>
         </div>
