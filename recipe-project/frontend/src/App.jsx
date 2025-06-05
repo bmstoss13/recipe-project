@@ -32,7 +32,7 @@ function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/recipes" element={<RecipePage />} />
               <Route path="/auth" element={<LoginSignup />} />
-              <Route path="/recipeDetail" element={<RecipeDetail />} />
+              <Route path="/recipeDetail/:id" element={<RecipeDetail />} />
               <Route path="/my-recipes" element={<MyRecipesPage />} />
               <Route path="/edamam-recipeDetail/:id" element={< EdamamRecipeDetail/>} />
             </Routes>

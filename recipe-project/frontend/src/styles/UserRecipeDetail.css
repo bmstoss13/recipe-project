@@ -1,0 +1,90 @@
+.userRecipeContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.userRecipeMain {
+    background-color: #F7F7FF;
+    min-height:100vh;
+    padding: 2rem 3rem;
+    height:auto;
+    flex: 1;
+    display: flex;
+    /* align-items: center; */
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.userRecipeHeaderContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.userRecipeHeaderText {
+    font-weight: 700;
+    font-size: 32px;
+
+    color: #000000;
+}
+
+.userRecipeUser {
+    font-weight: 500;
+    font-size: 16px;
+
+    margin-bottom: 1rem;
+
+    color: #565656;
+}
+
+.userRecipeHeaderSubText {
+    font-weight: 500;
+    font-size: 20px;
+
+    margin-top: 0.2rem;
+    margin-bottom: 0.5rem;
+
+    color: #000000;
+}
+
+.userRecipeNumbersContainer {
+    display: flex;
+    align-items: center;
+
+    gap: 2rem;
+}
+
+.userRecipeNumbersChild {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.userRecipeNumbersText {
+    font-size: 18px;
+}
+
+.userRecipeIngredientsContainer {
+    margin-top: 1rem;
+}
+
+.userRecipeIngredientsHeader {
+    font-weight: 600;
+    font-size: 26px;
+
+    color: #000000;
+}
+
+.userRecipeIngredientsChild {
+    font-weight: 400;
+    font-size: 18px;
+    margin-top: 0.3rem;
+
+    color: #000000;
+}
+
+.userRecipeInstructionsContainer {
+    margin-top: 1rem;
+}
