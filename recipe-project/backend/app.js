@@ -5,6 +5,7 @@ import cors from "cors";
 import recipeRoute from "./routes/recipeRoute.js";
 import create from "./routes/create.js";
 import authRoute from "./routes/authRoute.js";
+import commentsRouter from "./routes/comments.js";
 import admin from "./routes/admin.js";
 import myRecipesRoute from "./routes/myRecipesRoute.js";
 
@@ -30,6 +31,7 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoute);
 app.use("/api/recipes", recipeRoute);
 app.use("/create", create);
+app.use("/api/comments", commentsRouter);
 app.use("/admin", admin);
 app.use("/api/my-recipes", myRecipesRoute);
 

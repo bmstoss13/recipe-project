@@ -19,3 +19,9 @@ html, body {
   font-family: var(--main-font);
 
 }
+
+.custom-toast {
+  background-color: #ffe5e5 !important;
+  color: var(--salmon-accent-color) !important;
+  font-weight: 500;
+}

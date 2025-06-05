@@ -56,7 +56,7 @@ const LoginSignup = () => {
         return; 
       } else {
         await signInWithEmailAndPassword(auth, email, password);
-        navigate('/home'); {/*REPLACE WITH THE DASHBOARD*/}
+        navigate('/recipes');
       }
     } catch (err) {
       console.error(err);
