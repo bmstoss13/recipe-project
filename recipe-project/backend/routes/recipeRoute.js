@@ -98,7 +98,6 @@ router.get("/user-generated", async (req, res) => {
 router.get("/edamam/:encodedUri", async (req, res) => {
   try {
     const decodedUri = decodeURIComponent(req.params.encodedUri);
-    console.log("Edamam recipe for URI: " + decodedUri);
 
     if (!EDAMAM_APP_ID || !EDAMAM_APP_KEY) {
       return res.status(500).json({
@@ -115,7 +114,6 @@ router.get("/edamam/:encodedUri", async (req, res) => {
       },
     });
 
-    console.log("Edamam API raw response status:", apiResponse.status);
     console.log(
       "Edamam API raw response data structure:",
       JSON.stringify(apiResponse.data, null, 2)

@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import Comments from '../components/Comments';
 import Navbar from "../components/Navbar";
 import { CiImageOn } from 'react-icons/ci';
+import useCurrentUser from '../components/CurrentUser.jsx';
 
 const EdamamRecipeDetail = () => {
     const navigate = useNavigate();
@@ -18,6 +19,11 @@ const EdamamRecipeDetail = () => {
     const [recipeDetails, setRecipeDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const { user } = useCurrentUser();
+    const [savedRecipes, setSavedRecipes] = useState([]);
+    const [isSaved, setIsSaved] = useState(false);
+
 
     useEffect(() => {
         const fetchEdamamRecipeDetails = async() => {
@@ -46,6 +52,63 @@ const EdamamRecipeDetail = () => {
             setLoading(false);
         }
     }, [id]);
+
+    useEffect(() => {
+        const fetchSaved = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`http://localhost:5050/create/user/${user.uid}`);
+                    const data = response.data;
+                    setSavedRecipes(data.savedRecipes);
+
+                    const encodedUri = encodeURIComponent(id);
+                    setIsSaved(data.savedRecipes.includes(encodedUri));
+                } catch (e) {
+                    console.error("Failed to fetch saved recipes:", e);
+                }
+            }
+        };
+
+        fetchSaved();
+    }, [user, id]);
+
+    const addSaved = async () => {
+        const encodedUri = encodeURIComponent(id);
+        const updatedSaved = [...savedRecipes, encodedUri];
+        const body = {
+            id: user.uid,
+            savedRecipes: updatedSaved
+        };
+        try {
+            await axios.put(`http://localhost:5050/api/recipes/saveRecipe`, body);
+            toast.success("Recipe saved!");
+            setSavedRecipes(updatedSaved);
+            setIsSaved(true);
+        } catch (e) {
+            console.error("Error saving recipe:", e);
+            toast.error("Failed to save recipe.");
+        }
+    };
+
+    const removeSaved = async () => {
+        const encodedUri = encodeURIComponent(id);
+        const updatedSaved = savedRecipes.filter(recipeId => recipeId !== encodedUri);
+        const body = {
+            id: user.uid,
+            savedRecipes: updatedSaved
+        };
+        try {
+            await axios.put(`http://localhost:5050/api/recipes/saveRecipe`, body);
+            toast.success("Recipe removed.");
+            setSavedRecipes(updatedSaved);
+            setIsSaved(false);
+        } catch (e) {
+            console.error("Error removing saved recipe:", e);
+            toast.error("Failed to remove recipe.");
+        }
+    };
+
+
 
     if(loading) {
         return (
@@ -109,8 +172,20 @@ const EdamamRecipeDetail = () => {
             <h1>{title}</h1>
             <p>{description}</p>
             <div className="recipe-buttons">
-                <button className="outline">Share</button>
-                <button className="solid">Save Recipe</button>
+                <button
+                    className="outline"
+                    onClick={() => {
+                        navigator.clipboard.writeText(window.location.href);
+                        toast.success("Link copied!");
+                    }}
+                >
+                    Share
+                </button>
+                {isSaved ? (
+                    <button className="solid" onClick={removeSaved}>Unsave Recipe</button>
+                ) : (
+                    <button className="solid" onClick={addSaved}>Save Recipe</button>
+                )}
             </div>
             </div>
             <div className="recipe-image">
