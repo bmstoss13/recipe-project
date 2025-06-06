@@ -235,7 +235,7 @@ const EdamamRecipeDetail = () => {
             </section>
         )}
 
-        <Comments />
+        <Comments recipeId={id}/>
     </div>
 
       <div className="chat-button" onClick={() => alert("AI Assistant coming soon!")}>

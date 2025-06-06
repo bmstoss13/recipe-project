@@ -55,6 +55,9 @@ const Comments = ({recipeId}) => {
     if (recipeId) fetchComments();
   }, [recipeId]);
   
+  const refreshPage = () => {
+    window.location = window.location.href;
+  }
 
   const handlePost = async () => {
     if (!user?.uid) {
@@ -106,6 +109,7 @@ const Comments = ({recipeId}) => {
       console.error("Error posting comment:", e);
       toast.error("Error posting comment. Try again.");
     }
+    refreshPage();
   };
 
   const sortedComments = [...comments].sort((a, b) => {
