@@ -200,15 +200,17 @@ const EdamamRecipeDetail = () => {
 
         <section className="ingredients-section">
             <h2>Ingredients</h2>
+            <div className="ingredients-card">
             <ul>
                 {ingredients && ingredients.length > 0 ? (
                     ingredients.map((ing, index) => (
-                        <li key={index}>{ing.text}</li>
+                        <li key={index} className="ingredient-item">{ing.text}</li>
                     ))
                 ) : (
                     <li>No ingredients listed. Please reference the source of the recipe.</li>
                 )}
             </ul>
+            </div>
         </section>
 
         <section className="instructions">
