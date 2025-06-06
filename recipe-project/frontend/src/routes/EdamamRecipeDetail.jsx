@@ -198,22 +198,26 @@ const EdamamRecipeDetail = () => {
             </div>
         </div>
 
-        <section className="ingredients-section">
+        <section className="ingredients">
             <h2>Ingredients</h2>
             <div className="ingredients-card">
-            <ul>
+                <ul>
                 {ingredients && ingredients.length > 0 ? (
                     ingredients.map((ing, index) => (
-                        <li key={index} className="ingredient-item">{ing.text}</li>
+                    <li key={index} className="ingredient-item">
+                        {ing.text}
+                    </li>
                     ))
                 ) : (
-                    <li>No ingredients listed. Please reference the source of the recipe.</li>
+                    <li className="ingredient-item">
+                    No ingredients listed. Please reference the source of the recipe.
+                    </li>
                 )}
-            </ul>
+                </ul>
             </div>
         </section>
 
-        <section className="instructions">
+        {/* <section className="instructions">
             <h2>Instructions</h2>
             {sourceUrl ? (
                 <p>
@@ -225,17 +229,25 @@ const EdamamRecipeDetail = () => {
             ) : (
                 <p>Instructions not available directly from Edamam. Please check the source link if provided.</p>
             )}
-        </section>
+        </section> */}
 
-        {recipeDetails.totalNutrients && (
-            <section className="nutrition-info">
-                <h2>Nutrition Information (Per Serving)</h2>
-                <p>Calories: {recipeDetails.calories ? recipeDetails.calories.toFixed(0) : 'N/A'} kcal</p>
-                <p>Protein: {recipeDetails.totalNutrients.PROCNT?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.PROCNT?.unit || ''}</p>
-                <p>Fat: {recipeDetails.totalNutrients.FAT?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.FAT?.unit || ''}</p>
-                <p>Carbs: {recipeDetails.totalNutrients.CHOCDF?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.CHOCDF?.unit || ''}</p>   
-            </section>
-        )}
+        <section className="nutrition-section">
+        <h2 className="nutrition-heading">Nutrition Information (Per Serving)</h2>
+        <div className="nutrition-info">
+            <p>
+            <span className="label">Calories:</span> <span className="value">{recipeDetails.calories ? recipeDetails.calories.toFixed(0) : 'N/A'} kcal</span>
+            </p>
+            <p>
+            <span className="label">Protein:</span> <span className="value">{recipeDetails.totalNutrients.PROCNT?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.PROCNT?.unit || ''}</span>
+            </p>
+            <p>
+            <span className="label">Fat:</span> <span className="value">{recipeDetails.totalNutrients.FAT?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.FAT?.unit || ''}</span>
+            </p>
+            <p>
+            <span className="label">Carbs:</span> <span className="value">{recipeDetails.totalNutrients.CHOCDF?.quantity.toFixed(1) || 'N/A'} {recipeDetails.totalNutrients.CHOCDF?.unit || ''}</span>
+            </p>
+        </div>
+        </section>
 
         <Comments recipeId={id}/>
     </div>
