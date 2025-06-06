@@ -51,14 +51,37 @@ export async function editRecipe(recipeId, updatedData, userId) {
   }
 
 // Unsave a recipe (only if the recipe is in the user's savedRecipes array)
+// export async function unsaveRecipe(recipeId, userId) {
+//     const userDoc = await db.collection('users').doc(userId).get();
+//     const savedRecipes = userDoc.data()?.savedRecipes || [];
+//     if (savedRecipes.includes(recipeId)) {
+//       await db.collection('users').doc(userId).update({
+//         savedRecipes: admin.firestore.FieldValue.arrayRemove(recipeId)
+//       });
+//     } else {
+//       throw new Error('Unauthorized: Recipe not in your saved list.');
+//     }
+//   }
+// Unsave a recipe (only if the recipe is in the user's savedRecipes array)
 export async function unsaveRecipe(recipeId, userId) {
-    const userDoc = await db.collection('users').doc(userId).get();
-    const savedRecipes = userDoc.data()?.savedRecipes || [];
-    if (savedRecipes.includes(recipeId)) {
-      await db.collection('users').doc(userId).update({
-        savedRecipes: admin.firestore.FieldValue.arrayRemove(recipeId)
-      });
+  const userDoc = await db.collection('users').doc(userId).get();
+  const savedRecipes = userDoc.data()?.savedRecipes || [];
+  console.log('Trying to remove:', recipeId);
+  console.log('Saved recipes:', savedRecipes);
+  console.log('Match found:', savedRecipes.includes(recipeId));
+  savedRecipes.forEach((r, i) => {
+    if (r === recipeId) {
+      console.log('Exact match at index', i);
     } else {
-      throw new Error('Unauthorized: Recipe not in your saved list.');
+      console.log(`No match at index ${i}:`, r, '!==', recipeId);
     }
+  });
+  if (savedRecipes.includes(recipeId)) {
+    await db.collection('users').doc(userId).update({
+      savedRecipes: admin.firestore.FieldValue.arrayRemove(recipeId)
+    });
+  } else {
+    console.error('Not found in savedRecipes:', recipeId);
+    throw new Error('Unauthorized: Recipe not in your saved list.');
   }
+} 

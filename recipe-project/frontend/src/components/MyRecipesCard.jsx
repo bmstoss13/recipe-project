@@ -60,7 +60,7 @@ export default function MyRecipesCard({
 
           {tab === "created" ? (
             <>
-              {/* <button
+              <button
                 data-tooltip-id={`save-tooltip-${recipe.id || recipe.uri}`}
                 data-tooltip-content={isSaved ? "Unsave" : "Save"}
                 onClick={(e) => { stopPropagation(e); isSaved ? onUnsave() : onSave(); }}
@@ -68,7 +68,7 @@ export default function MyRecipesCard({
               >
                 {isSaved ? <FaBookmark /> : <FaRegBookmark />}
               </button>
-              <Tooltip id={`save-tooltip-${recipe.id || recipe.uri}`} delayShow={0} /> */}
+              <Tooltip id={`save-tooltip-${recipe.id || recipe.uri}`} delayShow={0} />
 
               <button
                 data-tooltip-id={`edit-tooltip-${recipe.id || recipe.uri}`}
@@ -92,7 +92,7 @@ export default function MyRecipesCard({
             </>
           ) : (
             <>
-              {/* <button
+              <button
                 data-tooltip-id={`unsave-tooltip-${recipe.id || recipe.uri}`}
                 data-tooltip-content="Unsave"
                 onClick={(e) => { stopPropagation(e); onUnsave(); }}
@@ -100,7 +100,7 @@ export default function MyRecipesCard({
               >
                 <FaBookmark />
               </button>
-              <Tooltip id={`unsave-tooltip-${recipe.id || recipe.uri}`} delayShow={0} /> */}
+              <Tooltip id={`unsave-tooltip-${recipe.id || recipe.uri}`} delayShow={0} />
             </>
           )}
         </div>
