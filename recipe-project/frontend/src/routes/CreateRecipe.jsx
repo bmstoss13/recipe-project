@@ -218,7 +218,7 @@ function CreateRecipe() {
               </div>
             </div>
             <div className="createRecipeErrorMessage">{errorMessage}</div>
-            <button className="createRecipeSubmit" type="button" onClick={() => submitRecipe()}>Submit Recipe</button>
+            <button className="createRecipeSubmit" type="button" onClick={() => submitRecipe()}>Submit Recipe for Review</button>
           </form>
         </div>
       </div>

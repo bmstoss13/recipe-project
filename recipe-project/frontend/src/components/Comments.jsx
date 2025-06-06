@@ -103,7 +103,9 @@ const Comments = ({recipeId}) => {
       setRating(0);
       // Refetch comments to get accurate createdAt
       const snapshot = await getDocs(collection(db, "comments"));
-      const refreshedComments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const refreshedComments = snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(comment => comment.recipeId === recipeId);
       setComments(refreshedComments);
     } catch (e) {
       console.error("Error posting comment:", e);
