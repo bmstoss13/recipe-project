@@ -92,51 +92,14 @@
   
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    justify-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    justify-items: start;
     margin-left: 0;
     width: 100%;
-    box-sizing: border-box;
-  }
-  /* When sidebar is open, use 3 columns */
-.sidebar.open ~ .my-recipes-main-content .grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* when sidebar is open, 2 columns for medium screens */
-@media (max-width: 1100px) {
-  .grid,
-  .sidebar.open ~ .my-recipes-main-content .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* When sidebar is open, 1 column for small/mobile screens */
-@media (max-width: 700px) {
-  .grid,
-  .sidebar.open ~ .my-recipes-main-content .grid {
-    grid-template-columns: 1fr;
-  }
-}
-/* When sidebar is closed, 3 columns */
-  @media (max-width: 1200px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-
-/* When sidebar is closed, 2 columns for medium screen */
-  @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-/* When sidebar is closed, 1 column for small/mobile screens */
-  @media (max-width: 600px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
+    max-width: 1200px;
+    padding: 20px 0;
+    justify-content: start;
   }
 
   .recipe-wrapper {
