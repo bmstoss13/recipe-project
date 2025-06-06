@@ -87,10 +87,22 @@ router.put('/:id', authenticate, async (req, res) => {
   }
 });
 
-// Unsave a recipe
-router.post('/unsave/:id', authenticate, async (req, res) => {
+// // Unsave a recipe
+// router.post('/unsave/:id', authenticate, async (req, res) => {
+//   try {
+//     await unsaveRecipe(req.params.id, req.user.uid);
+//     res.json({ success: true });
+//   } catch (err) {
+//     res.status(500).json({ error: err.message });
+//   }
+// });
+router.post('/unsave', authenticate, async (req, res) => {
   try {
-    await unsaveRecipe(req.params.id, req.user.uid);
+    const { id } = req.body;
+    if (!id) {
+      return res.status(400).json({ error: 'Recipe ID is required' });
+    }
+    await unsaveRecipe(id, req.user.uid);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });

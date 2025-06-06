@@ -55,16 +55,13 @@ export default function MyRecipesPage() {
       )
       .then(async (res) => {
         if (tab === 'saved') {
-          // For saved recipes, need to fetch Edamam recipe details for Edamam URIs
           const edamamRecipes = res.data.filter(recipe => recipe.type === 'edamam');
           const userRecipes = res.data.filter(recipe => recipe.type !== 'edamam');
           
           if (edamamRecipes.length > 0) {
-            // Fetch Edamam recipe details
             const edamamPromises = edamamRecipes.map(recipe => 
               axios.get(`/api/recipes/edamam/${encodeURIComponent(recipe.uri)}`)
             );
-            
             try {
               const edamamResponses = await Promise.all(edamamPromises);
               const edamamDetails = edamamResponses.map(response => ({
@@ -72,10 +69,21 @@ export default function MyRecipesPage() {
                 type: 'edamam',
                 uri: response.data.uri
               }));
-              setRecipes([...userRecipes, ...edamamDetails]);
+      
+              // Normalize IDs
+              const normalizedUserRecipes = userRecipes.map(r => ({
+                ...r,
+                id: r.id
+              }));
+              const normalizedEdamamDetails = edamamDetails.map(r => ({
+                ...r,
+                id: encodeURIComponent(r.uri)
+              }));
+      
+              setRecipes([...normalizedUserRecipes, ...normalizedEdamamDetails]);
             } catch (err) {
               console.error('Error fetching Edamam recipes:', err);
-              setRecipes(userRecipes); // Fallback to just user recipes if Edamam fetch fails
+              setRecipes(userRecipes);
             }
           } else {
             setRecipes(userRecipes);
@@ -102,7 +110,7 @@ export default function MyRecipesPage() {
   // Unsave a recipe
   const handleUnsave = async (id) => {
     const headers = await getAuthHeaders();
-    await axios.post(`/api/my-recipes/unsave/${encodeURIComponent(id)}`, {}, { headers });
+    await axios.post(`/api/my-recipes/unsave`, { id }, { headers });
     if (tab === "saved") {
       setRecipes((prev) => prev.filter((r) => r.id !== id));
     }
@@ -131,7 +139,7 @@ export default function MyRecipesPage() {
   // Save a recipe
   const handleSave = async (id) => {
     const headers = await getAuthHeaders();
-    await axios.post(`/api/my-recipes/save/${id}`, {}, { headers });
+    await axios.post(`/api/my-recipes/save`, { id }, { headers });
     setSavedRecipeIds((prev) => [...prev, id]);
     toast.success("Recipe saved!");
   };
