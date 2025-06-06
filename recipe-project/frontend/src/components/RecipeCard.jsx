@@ -18,7 +18,7 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
         setSaved(isSaved);
     }, [isSaved]);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         const toggled = !saved;
         setSaved(toggled);
 
@@ -38,7 +38,7 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
                 type
             };
 
-            onSaveRecipe(entry); 
+            await onSaveRecipe(entry); 
         }
     };
 
@@ -51,7 +51,7 @@ const RecipeCard = ({ recipe, isOfficial, onSaveRecipe, isSaved }) => {
                     {imageUrl ? (
                         <img src={imageUrl} alt={title} className="recipe-image-content" />
                     ) : (
-                        <CiImageOn className="recipe-image" /> 
+                        <CiImageOn className="browse-recipe-image" /> 
                     )}
                 </div>
             </Link>
