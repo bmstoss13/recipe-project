@@ -53,22 +53,25 @@ const RecipePage = () => {
 
 
     useEffect(() => {
-        if (!authChecked || !user) return;
+        if (!user) return;
+        getAuthHeaders()
+        .then(headers => 
+            axios.get('/api/my-recipes/saved', { headers })
+        )
+        .then(res => {
+            setSavedRecipeIds(res.data.map(savedRecipe => {
 
-        // Fetch list of saved recipes
-        const fetchSavedRecipes = async () => {
-            try {
-                const headers = await getAuthHeaders();
-                const response = await axios.get('/api/my-recipes/saved', { headers });
-                const ids = response.data.map(recipe => recipe.id); 
-                setSavedRecipeIds(ids);
-            } catch (err) {
-                console.error("Failed to fetch saved recipe IDs:", err);
-            }
-        };
-
-        fetchSavedRecipes();
-    }, [authChecked, user]);
+                if (savedRecipe.type === 'edamam') {
+                    console.log("recipe: " + savedRecipe.uri);
+                    return decodeURIComponent(savedRecipe.uri);
+                } 
+                else {
+                    return savedRecipe.id;
+                }
+            }));
+        })
+        .catch(err => console.error('Error fetching saved recipes:', err));
+    }, [user]);
 
     //Get recipes
     const fetchRecipes = async(type, query='') => {
@@ -96,29 +99,32 @@ const RecipePage = () => {
         }
     };
     const handleSaveRecipe = async (recipeData) => {
-    const { id, type } = recipeData;
-    console.log('Toggling save for recipe:', id);
+        const { id, type } = recipeData;
+        console.log('Toggling save for recipe:', id);
 
-    try {
-        const headers = await getAuthHeaders();
-
-        if (savedRecipeIds.includes(id)) {
-        //unsavign the item
-        await axios.post(`/api/my-recipes/unsave/${encodeURIComponent(id)}`, null, { headers });
-        setSavedRecipeIds((prev) => prev.filter((savedId) => savedId !== id));
-        toast.success("Recipe unsaved.");
+        try {
+            const headers = await getAuthHeaders();
+            console.log("bool: " + savedRecipeIds.includes(id));
+            console.log("id: " + decodeURIComponent(id));
+            if (savedRecipeIds.includes(id)) {
+            //unsavign the item
+                await axios.post(`/api/my-recipes/unsave/${encodeURIComponent(id)}`, {}, { headers });
+                setSavedRecipeIds((prev) => prev.filter((savedId) => savedId !== id));
+                console.log("unsaved");
+            // toast.success("Recipe unsaved.");
+            } 
+            else {
+            //saving the item
+                await axios.post(`/api/my-recipes/save`, { id, type }, { headers });
+                setSavedRecipeIds((prev) => [...prev, id]);
+                console.log("saved");
+            // toast.success("Recipe saved.");
+            }
         } 
-        else {
-        //saving the item
-        await axios.post(`/api/my-recipes/save`, { id, type }, { headers });
-        setSavedRecipeIds((prev) => [...prev, id]);
-        toast.success("Recipe saved.");
+        catch (err) {
+            console.error("Error toggling saved state:", err);
+            toast.error("Failed to update saved state.");
         }
-    } 
-    catch (err) {
-        console.error("Error toggling saved state:", err);
-        toast.error("Failed to update saved state.");
-    }
     };
 
 
@@ -181,7 +187,12 @@ const RecipePage = () => {
                                     key={recipe.id || recipe.uri || recipe.recipe.uri}
                                     recipe={recipe}
                                     isOfficial={recipeType === 'edamam'}
-                                    isSaved={savedRecipeIds.includes(recipe.uri || recipe.id || recipe.recipe?.uri)}
+                                    isSaved={
+                                        recipeType === 'edamam'
+                                            ? savedRecipeIds.includes(decodeURIComponent(recipe.recipe?.uri || recipe.uri))
+
+                                            : savedRecipeIds.includes(recipe.id)
+                                    }
                                     onSaveRecipe={handleSaveRecipe} 
                                 />
                             ))
